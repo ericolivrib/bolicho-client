@@ -1,0 +1,155 @@
+<form [formGroup]="formulario" (ngSubmit)="adicionar()">
+   <div class="row g-2">
+      <div class="col-12">
+         <div class="mb-3">
+            <label for="nome" class="form-label h6">Nome<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="nome" formControlName="nome">
+         </div>
+      </div>
+   </div>
+
+   <div class="row g-2">
+      <div class="col-5">
+         <div class="mb-3">
+            <label for="email" class="form-label h6">E-mail<span class="text-danger">*</span></label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+         </div>
+      </div>
+
+      <div class="col-4">
+         <div class="mb-3">
+            <label for="telefone" class="form-label h6">Telefone<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="telefone" formControlName="telefone">
+         </div>
+      </div>
+
+      <div class="col-3">
+         <div class="mb-3">
+            <label for="cpf" class="form-label h6">CPF<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="cpf" formControlName="cpf">
+         </div>
+      </div>
+   </div>
+
+   <div class="row g-2">
+      <div class="col-3">
+         <div class="mb-3">
+            <label for="cep" class="form-label h6">CEP</label>
+            <input type="text" class="form-control" id="cep" formControlName="cep">
+         </div>
+      </div>
+   </div>
+
+   <div class="row g-2">
+      <div class="col-5">
+         <div class="mb-3">
+            <label for="bairro" class="form-label h6">Bairro<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="bairro" list="bairros" formControlName="bairro">
+            <datalist id="bairros">
+               <option value="Agroindustrial">
+               <option value="Arroio Grande">
+               <option value="Boi Morto">
+               <option value="Bonfim">
+               <option value="Camobi">
+               <option value="Campestre do Menino Deus">
+               <option value="Caramelo">
+               <option value="Carolina">
+               <option value="Caturrita">
+               <option value="Cauduro">
+               <option value="Centro">
+               <option value="Cerrito">
+               <option value="Chácara das Flores">
+               <option value="Cohab F Ferrari">
+               <option value="Cohab Passo Ferreira">
+               <option value="Cohab Santa Maria">
+               <option value="Cohab Tancredo Neves">
+               <option value="Diácono João Luiz Pozzobon">
+               <option value="Distrito Industrial">
+               <option value="Divina Providência">
+               <option value="Dom Antônio Reis">
+               <option value="Duque de Caxias">
+               <option value="Faixa Soo Pedro">
+               <option value="Formosa">
+               <option value="Industrial">
+               <option value="Itararé">
+               <option value="Itarajú">
+               <option value="Juscelino Kubitschek">
+               <option value="Km 3">
+               <option value="Lorenzi">
+               <option value="Maringá">
+               <option value="Medianeira">
+               <option value="Menino Jesus">
+               <option value="Noal">
+               <option value="Nonoai">
+               <option value="Nossa Senhora das Dores">
+               <option value="Nossa Senhora de Fátima">
+               <option value="Nossa Senhora de Lourdes">
+               <option value="Nossa Senhora do Perpétuo Socorro">
+               <option value="Nossa Senhora do Rosário">
+               <option value="Nossa Senhora Dores">
+               <option value="Nossa Senhora Medianeira">
+               <option value="Nova Santa Marta">
+               <option value="Padre de Platano">
+               <option value="Passo D'areia">
+               <option value="Passo Tropas">
+               <option value="Patronato">
+               <option value="Pinheiro Machado">
+               <option value="Presidente João Goulart">
+               <option value="Renascença">
+               <option value="Retiro Padres">
+               <option value="Ruralcel">
+               <option value="Salgado Filho">
+               <option value="São João">
+               <option value="São José">
+               <option value="Subúrbios">
+               <option value="Switch">
+               <option value="Tancredo Neves">
+               <option value="Tomazetti">
+               <option value="Uglione">
+               <option value="Urlandia">
+               <option value="Vila Arco-íris">
+               <option value="Vila Bilibio">
+               <option value="Vila Fighera">
+               <option value="Vila Formosa">
+               <option value="Zona Rural">
+            </datalist>
+         </div>
+      </div>
+
+      <div class="col-4">
+         <div class="mb-3">
+            <label for="logradouro" class="form-label h6">Logradouro<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="logradouro" formControlName="logradouro">
+         </div>
+      </div>
+
+      <div class="col-3">
+         <div class="mb-3">
+            <label for="numero" class="form-label h6">Número<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="numero" formControlName="numero">
+         </div>
+      </div>
+   </div>
+
+   <div class="row g-2">
+      <div class="col">
+         <div class="mb-3">
+            <label for="complemento" class="form-label h6">Complemento</label>
+            <input type="text" class="form-control" id="complemento" formControlName="complemento">
+         </div>
+      </div>
+
+      <div class="col">
+         <div class="mb-3">
+            <label for="pontoReferencia" class="form-label h6">Ponto de Referência</label>
+            <input type="text" class="form-control" id="pontoReferencia" formControlName="pontoReferencia">
+         </div>
+      </div>
+   </div>
+
+   <div class="row g-2">
+      <div class="col">
+         <button type="submit" class="btn btn-primary">Adicionar</button>
+      </div>
+   </div>
+</form>

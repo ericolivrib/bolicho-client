@@ -1,0 +1,13 @@
+<form [formGroup]="formulario" (ngSubmit)="entrar()">
+   <div class="mb-3">
+      <label for="email" class="form-label h6">E-mail</label>
+      <input type="email" class="form-control" id="email" [(ngModel)]="usuario.email" formControlName="email">
+   </div>
+
+   <div class="mb-3">
+      <label for="senha" class="form-label h6">Senha</label>
+      <input type="password" class="form-control" id="senha" [(ngModel)]="usuario.senha" formControlName="senha">
+   </div>
+
+   <button type="submit" class="btn btn-primary">Entrar</button>
+</form>
