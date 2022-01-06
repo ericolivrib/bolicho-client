@@ -6,11 +6,23 @@ import { Produto } from '../model/produto';
 })
 export class ProdutoService {
 
-   produtos: Array<Produto> = [
+   private produtos: Array<Produto> = [
       new Produto(
-
+         1,
+         "Queijo Colonial",
+         27.00,
+         "Quilograma/Kg",
+         5
       )
    ]
 
    constructor() {}
+
+   getProdutos(): Array<Produto> {
+      return this.produtos;
+   }
+
+   adicionar(produto: Produto): void {
+      this.produtos.push(produto);
+   }
 }

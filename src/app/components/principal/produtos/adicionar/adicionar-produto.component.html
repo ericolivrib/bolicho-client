@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="adicionar()">
+   <div class="row g-2">
+      <!-- DESCRIÇÃO -->
+      <div class="col">
+         <div class="mb-3">
+            <label for="descricao" class="form-label h6">Descrição<span class="text-danger">*</span></label>
+            <input type="text" id="descricao" class="form-control" formControlName="descricao">
+         </div>
+      </div>
+   </div>
+
+   <div class="row g-2">
+      <!-- PREÇO UNITÁRIO -->
+      <div class="col">
+         <div class="mb-3">
+            <label for="precoUnitario" class="form-label h6">Preço unitário<span class="text-danger">*</span></label>
+            <input type="text" id="precoUnitario" class="form-control" formControlName="precoUnitario">
+         </div>
+      </div>
+
+      <!-- UNIDADE DE MEDIDA -->
+      <div class="col">
+         <div class="mb-3">
+            <label for="unidadeMedida" class="form-label h6">Unidade de medida<span class="text-danger">*</span></label>
+            <select id="unidadeMedida" class="form-select" formControlName="unidadeMedida">
+               <option selected disabled>-- Selecione a unidade de medida --</option>
+               <option value="Kg">Quilograma/Kg</option>
+               <option value="Unidade">Unidade/unid.</option>
+               <option value="Litro">Litro/L</option>
+            </select>
+         </div>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col">
+         <button type="submit" class="btn btn-primary">Adicionar</button>
+      </div>
+   </div>
+</form>

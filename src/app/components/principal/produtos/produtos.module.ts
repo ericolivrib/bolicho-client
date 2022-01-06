@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ProdutosComponent } from './produtos.component';
 import { ProdutosRoutingModule } from './produtos-routing.module';
@@ -14,7 +15,9 @@ import { EditarProdutoComponent } from './editar/editar-produto.component';
    ],
    imports: [
       CommonModule,
-      ProdutosRoutingModule
+      ProdutosRoutingModule,
+      FormsModule,
+      ReactiveFormsModule
    ],
 })
 export class ProdutosModule {}
