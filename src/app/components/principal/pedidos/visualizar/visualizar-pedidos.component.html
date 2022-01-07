@@ -1,0 +1,38 @@
+<table class="table table-bordered table-striped">
+   <thead>
+      <tr class="text-center">
+         <th scope="col">#</th>
+         <th scope="col">Cliente</th>
+         <th scope="col">Itens</th>
+         <th scope="col">Data do pedido</th>
+         <th scope="col">Prazo de entrega</th>
+         <th scope="col">Total</th>
+         <th scope="col">
+            <i class="bi bi-gear-wide-connected"></i>
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr class="text-center" *ngFor="let p of pedidos; let i = index">
+         <th scope="row">{{ i + 1 }}</th>
+         <td>{{ p.cliente.nome }}</td>
+         <td>
+            <button class="btn btn-sm">
+               <i class="bi bi-eye-fill"></i>
+            </button>
+         </td>
+         <td>{{ p.dataPedido | date:'dd/MM/yyyy' }}</td>
+         <td>{{ p.prazoEntrega | date:'dd/MM/yyyy' }}</td>
+         <td>{{ p.valorTotal | currency:'BRL' }}</td>
+         <td>
+            <button class="btn btn-warning btn-sm">
+               <i class="bi bi-pencil-fill"></i>
+            </button>
+            &nbsp;
+            <button class="btn btn-danger btn-sm">
+               <i class="bi bi-trash"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+</table>

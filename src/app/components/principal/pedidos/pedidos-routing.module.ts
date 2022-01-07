@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdicionarPedidoComponent } from './adicionar/adicionar-pedido.component';
 
 import { PedidosComponent } from './pedidos.component';
+import { AdicionarPedidoComponent } from './adicionar/adicionar-pedido.component';
+import { VisualizarPedidosComponent } from './visualizar/visualizar-pedidos.component';
 
 const routes: Routes = [{
    path: '',
    component: PedidosComponent,
    children: [
-      { path: 'adicionar', component: AdicionarPedidoComponent }
+      { path: 'adicionar', component: AdicionarPedidoComponent },
+      { path: 'visualizar', component: VisualizarPedidosComponent }
    ]
 }];
 
