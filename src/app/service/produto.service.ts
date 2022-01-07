@@ -7,13 +7,7 @@ import { Produto } from '../model/produto';
 export class ProdutoService {
 
    private produtos: Array<Produto> = [
-      new Produto(
-         1,
-         "Queijo Colonial",
-         27.00,
-         "Quilograma/Kg",
-         5
-      )
+      new Produto(1, "Queijo Colonial", 27.00, "Quilograma/Kg", 5)
    ]
 
    constructor() {}
@@ -40,6 +34,10 @@ export class ProdutoService {
 
    atualizar(produto: Produto): void {
       this.produtos[this.produtos.indexOf(produto)] = produto;
+   }
+
+   atualizarQtdEstoque(produto: Produto, quantidade: number): void {
+      this.produtos[this.produtos.indexOf(produto)].qtdEstoque += quantidade;
    }
 
    remover(produto: Produto): void {

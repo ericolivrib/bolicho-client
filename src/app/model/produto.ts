@@ -5,6 +5,6 @@ export class Produto {
       public descricao: string,
       public precoUnitario: number,
       public unidadeMedida: string,
-      public quantidadeEstoque: number
+      public qtdEstoque: number
    ) {}
 }

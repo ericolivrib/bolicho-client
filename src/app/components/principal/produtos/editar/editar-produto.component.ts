@@ -15,7 +15,8 @@ export class EditarProdutoComponent implements OnInit {
    produtos!: Array<Produto>;
    produto!: Produto;
    modalRef?: BsModalRef;
-   form!: FormGroup;
+   formEditar!: FormGroup;
+   formQtd!: FormGroup;
 
    constructor(
       private produtoService: ProdutoService,
@@ -30,7 +31,7 @@ export class EditarProdutoComponent implements OnInit {
    modalEditar(template: TemplateRef<Produto>, id: number): void {
       this.produto = this.produtoService.getProdutoById(id);
 
-      this.form = this.fb.group({
+      this.formEditar = this.fb.group({
          descricao: [this.produto.descricao, [Validators.required]],
          precoUnitario: [this.produto.precoUnitario, [Validators.required]],
          unidadeMedida: [this.produto.unidadeMedida, [Validators.required]]
@@ -49,13 +50,38 @@ export class EditarProdutoComponent implements OnInit {
       );
    }
 
+   modalAtualizarEstoque(template: TemplateRef<Produto>, id: number): void {
+      this.produto = this.produtoService.getProdutoById(id);
+
+      this.formQtd = this.fb.group({
+         quantidade: [null, [Validators.required, Validators.minLength(0)]]
+      });
+
+      this.modalRef = this.modalService.show(template,
+         Object.assign({}, { class: 'modal-md' })
+      );
+   }
+
    editarProduto(): void {
-      this.produtoService.atualizar(this.produto);
-      this.modalRef?.hide();
+      if (this.formEditar.valid) {
+         this.produto.descricao = this.formEditar.get('descricao')?.value;
+         this.produto.precoUnitario = this.formEditar.get('precoUnitario')?.value;
+         this.produto.unidadeMedida = this.formEditar.get('unidadeMedida')?.value;
+
+         this.produtoService.atualizar(this.produto);
+         this.modalRef?.hide();
+      }
    }
 
    removerProduto(): void {
       this.produtoService.remover(this.produto);
-      this.modalRef?.hide()
+      this.modalRef?.hide();
+   }
+
+   atualizarEstoque(): void {
+      if (this.formQtd.valid) {
+         this.produtoService.atualizarQtdEstoque(this.produto, this.formQtd.get('quantidade')?.value);
+         this.modalRef?.hide();
+      }
    }
 }

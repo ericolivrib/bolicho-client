@@ -17,9 +17,9 @@
          <td>{{ p.descricao }}</td>
          <td>{{ p.precoUnitario | currency:'BRL' }}</td>
          <td>{{ p.unidadeMedida }}</td>
-         <td>{{ p.quantidadeEstoque }}</td>
+         <td>{{ p.qtdEstoque }}</td>
          <td>
-            <button class="btn btn-primary btn-sm">
+            <button class="btn btn-primary btn-sm" (click)="modalAtualizarEstoque(atualizarQtd, p.id)">
                <i class="bi bi-plus-circle"></i>
             </button>
             &nbsp;
@@ -48,14 +48,14 @@
 </table>
 
 <ng-template #editar>
-   <form [formGroup]="form" (ngSubmit)="editarProduto()">
+   <form [formGroup]="formEditar" (ngSubmit)="editarProduto()">
       <div class="modal-header">
-         <h1 class="modal-title h5">Editar <font class="text-warning">{{ produto.descricao }}</font>
-         </h1>
+         <h1 class="modal-title h5">Editar <font class="text-warning">{{ produto.descricao }}</font></h1>
       </div>
 
       <div class="modal-body">
          <div class="row g-2">
+
             <!-- DESCRIÇÃO -->
             <div class="col">
                <div class="mb-3">
@@ -66,11 +66,11 @@
          </div>
 
          <div class="row g-2">
+
             <!-- PREÇO UNITÁRIO -->
             <div class="col">
                <div class="mb-3">
-                  <label for="precoUnitario" class="form-label h6">Preço unitário<span
-                        class="text-danger">*</span></label>
+                  <label for="precoUnitario" class="form-label h6">Preço unitário<span class="text-danger">*</span></label>
                   <input type="text" id="precoUnitario" class="form-control form-control-sm" formControlName="precoUnitario">
                </div>
             </div>
@@ -78,10 +78,9 @@
             <!-- UNIDADE DE MEDIDA -->
             <div class="col">
                <div class="mb-3">
-                  <label for="unidadeMedida" class="form-label h6">Unidade de medida<span
-                        class="text-danger">*</span></label>
+                  <label for="unidadeMedida" class="form-label h6">Unidade de medida<span class="text-danger">*</span></label>
                   <select id="unidadeMedida" class="form-select form-select-sm" formControlName="unidadeMedida">
-                     <option selected disabled>-- Selecione a unidade de medida --</option>
+                     <option disabled>-- Selecione a unidade de medida --</option>
                      <option value="Kg">Quilograma/Kg</option>
                      <option value="Unidade">Unidade/unid.</option>
                      <option value="Litro">Litro/L</option>
@@ -92,20 +91,17 @@
       </div>
 
       <div class="modal-footer">
-         <div class="row">
-            <div class="col">
-               <button type="submit" class="btn btn-warning" (click)="editarProduto()">Editar</button>
-               &nbsp;
-               <button type="submit" class="btn btn-secondary" (click)="this.modalRef?.hide()">Cancelar</button>
-            </div>
-         </div>
+         <button type="submit" class="btn btn-warning" (click)="editarProduto()">Editar</button>
+         &nbsp;
+         <button type="submit" class="btn btn-secondary" (click)="this.modalRef?.hide()">Cancelar</button>
       </div>
    </form>
 </ng-template>
 
 <ng-template #remover>
    <div class="modal-header">
-      <h1 class="modal-title h5">Remover <font class="text-danger">{{ produto.descricao }}</font></h1>
+      <h1 class="modal-title h5">Remover <font class="text-danger">{{ produto.descricao }}</font>
+      </h1>
    </div>
 
    <div class="modal-body">
@@ -119,4 +115,28 @@
       &nbsp;
       <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
    </div>
+</ng-template>
+
+<ng-template #atualizarQtd>
+   <form class="form-group" [formGroup]="formQtd" (ngSubmit)="atualizarEstoque()">
+      <div class="modal-header">
+         <div class="modal-title h5">Atualizar estoque de <font class="text-primary">{{ produto.descricao }}</font>
+         </div>
+      </div>
+
+      <div class="modal-body">
+         <div class="row">
+            <label for="quantidade" class="col-8 col-form-label h6">Quantidade a ser adicionada ao estoque:</label>
+            <div class="col-4">
+               <input type="number" id="quantidade" class="form-control form-control-sm" formControlName="quantidade">
+            </div>
+         </div>
+      </div>
+
+      <div class="modal-footer">
+         <button type="submit" class="btn btn-warning" (click)="atualizarEstoque()">Adicionar</button>
+         &nbsp;
+         <button type="submit" class="btn btn-secondary" (click)="this.modalRef?.hide()">Cancelar</button>
+      </div>
+   </form>
 </ng-template>
