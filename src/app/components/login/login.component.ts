@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-   public usuario: Usuario = new Usuario();
+   public usuario!: Usuario;
    public formulario!: FormGroup;
 
    constructor(
@@ -29,8 +29,16 @@ export class LoginComponent implements OnInit {
    }
 
    entrar(): void {
-      if (this.authService.autenticar(this.usuario)) {
-         this.router.navigate(['principal']);
+      if (this.formulario.valid) {
+         new Usuario(
+            1,
+            this.formulario.get('email')?.value,
+            this.formulario.get('senha')?.value
+         );
+
+         if (this.authService.autenticar(this.usuario)) {
+            this.router.navigate(['principal']);
+         }
       }
    }
 }
