@@ -41,4 +41,8 @@ export class ProdutoService {
    atualizar(produto: Produto): void {
       this.produtos[this.produtos.indexOf(produto)] = produto;
    }
+
+   remover(produto: Produto): void {
+      this.produtos.splice(this.produtos.indexOf(produto, 1));
+   }
 }

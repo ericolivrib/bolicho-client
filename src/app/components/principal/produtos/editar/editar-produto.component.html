@@ -27,7 +27,7 @@
                <i class="bi bi-pencil-fill"></i>
             </button>
             &nbsp;
-            <button class="btn btn-danger btn-sm">
+            <button class="btn btn-danger btn-sm" (click)="modalRemover(remover, p.id)">
                <i class="bi bi-trash"></i>
             </button>
          </td>
@@ -101,4 +101,22 @@
          </div>
       </div>
    </form>
+</ng-template>
+
+<ng-template #remover>
+   <div class="modal-header">
+      <h1 class="modal-title h5">Remover <font class="text-danger">{{ produto.descricao }}</font></h1>
+   </div>
+
+   <div class="modal-body">
+      Tem certeza que deseja remover o produto do sistema?
+      <br><br>
+      Essa ação não poderá ser revertida!
+   </div>
+
+   <div class="modal-footer">
+      <button class="btn btn-danger" (click)="removerProduto()">Sim</button>
+      &nbsp;
+      <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
+   </div>
 </ng-template>

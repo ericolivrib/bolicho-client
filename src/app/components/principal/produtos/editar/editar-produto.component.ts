@@ -41,8 +41,21 @@ export class EditarProdutoComponent implements OnInit {
       );
    }
 
+   modalRemover(template: TemplateRef<Produto>, id: number): void {
+      this.produto = this.produtoService.getProdutoById(id);
+
+      this.modalRef = this.modalService.show(template,
+         Object.assign({}, { class: 'modal-md' })
+      );
+   }
+
    editarProduto(): void {
       this.produtoService.atualizar(this.produto);
       this.modalRef?.hide();
+   }
+
+   removerProduto(): void {
+      this.produtoService.remover(this.produto);
+      this.modalRef?.hide()
    }
 }
