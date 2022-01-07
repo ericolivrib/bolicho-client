@@ -22,7 +22,23 @@ export class ProdutoService {
       return this.produtos;
    }
 
+   getProdutoById(id: number): Produto {
+      let produto!: Produto;
+
+      for (let p of this.produtos) {
+         if (p.id === id) {
+            produto = p;
+         }
+      }
+
+      return produto;
+   }
+
    adicionar(produto: Produto): void {
       this.produtos.push(produto);
+   }
+
+   atualizar(produto: Produto): void {
+      this.produtos[this.produtos.indexOf(produto)] = produto;
    }
 }

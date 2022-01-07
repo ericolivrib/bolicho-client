@@ -1,0 +1,104 @@
+<table class="table">
+   <thead>
+      <tr class="text-center">
+         <th scope="col">#</th>
+         <th scope="col">Descrição</th>
+         <th scope="col">Preço unitário</th>
+         <th scope="col">Unidade de medida</th>
+         <th scope="col">Qtd. estoque</th>
+         <th>
+            <i class="bi bi-gear-wide-connected"></i>
+         </th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr class="text-center" *ngFor="let p of produtos; let i = index">
+         <th scope="row">{{ i + 1 }}</th>
+         <td>{{ p.descricao }}</td>
+         <td>{{ p.precoUnitario | currency:'BRL' }}</td>
+         <td>{{ p.unidadeMedida }}</td>
+         <td>{{ p.quantidadeEstoque }}</td>
+         <td>
+            <button class="btn btn-primary btn-sm">
+               <i class="bi bi-plus-circle"></i>
+            </button>
+            &nbsp;
+            <button class="btn btn-warning btn-sm" (click)="modalEditar(editar, p.id)">
+               <i class="bi bi-pencil-fill"></i>
+            </button>
+            &nbsp;
+            <button class="btn btn-danger btn-sm">
+               <i class="bi bi-trash"></i>
+            </button>
+         </td>
+      </tr>
+   </tbody>
+   <tfoot>
+      <tr class="text-center">
+         <th scope="col">#</th>
+         <th scope="col">Descrição</th>
+         <th scope="col">Preço unitário</th>
+         <th scope="col">Unidade de medida</th>
+         <th scope="col">Qtd. estoque</th>
+         <th>
+            <i class="bi bi-gear-wide-connected"></i>
+         </th>
+      </tr>
+   </tfoot>
+</table>
+
+<ng-template #editar>
+   <form [formGroup]="form" (ngSubmit)="editarProduto()">
+      <div class="modal-header">
+         <h1 class="modal-title h5">Editar <font class="text-warning">{{ produto.descricao }}</font>
+         </h1>
+      </div>
+
+      <div class="modal-body">
+         <div class="row g-2">
+            <!-- DESCRIÇÃO -->
+            <div class="col">
+               <div class="mb-3">
+                  <label for="descricao" class="form-label h6">Descrição<span class="text-danger">*</span></label>
+                  <input type="text" id="descricao" class="form-control form-control-sm" formControlName="descricao">
+               </div>
+            </div>
+         </div>
+
+         <div class="row g-2">
+            <!-- PREÇO UNITÁRIO -->
+            <div class="col">
+               <div class="mb-3">
+                  <label for="precoUnitario" class="form-label h6">Preço unitário<span
+                        class="text-danger">*</span></label>
+                  <input type="text" id="precoUnitario" class="form-control form-control-sm" formControlName="precoUnitario">
+               </div>
+            </div>
+
+            <!-- UNIDADE DE MEDIDA -->
+            <div class="col">
+               <div class="mb-3">
+                  <label for="unidadeMedida" class="form-label h6">Unidade de medida<span
+                        class="text-danger">*</span></label>
+                  <select id="unidadeMedida" class="form-select form-select-sm" formControlName="unidadeMedida">
+                     <option selected disabled>-- Selecione a unidade de medida --</option>
+                     <option value="Kg">Quilograma/Kg</option>
+                     <option value="Unidade">Unidade/unid.</option>
+                     <option value="Litro">Litro/L</option>
+                  </select>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="modal-footer">
+         <div class="row">
+            <div class="col">
+               <button type="submit" class="btn btn-warning" (click)="editarProduto()">Editar</button>
+               &nbsp;
+               <button type="submit" class="btn btn-secondary" (click)="this.modalRef?.hide()">Cancelar</button>
+            </div>
+         </div>
+      </div>
+   </form>
+</ng-template>
