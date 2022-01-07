@@ -69,7 +69,20 @@ export class EditarClienteComponent implements OnInit {
    }
 
    editarCliente(): void {
-      this.clientesService.atualizar(this.cliente);
-      this.modalRef?.hide();
+      if (this.form.valid) {
+         this.cliente.nome = this.form.get('nome')?.value;
+         this.cliente.email = this.form.get('email')?.value;
+         this.cliente.telefone = this.form.get('telefone')?.value;
+         this.cliente.cpf = this.form.get('cpf')?.value;
+         this.cliente.endereco.cep = this.form.get('cep')?.value;
+         this.cliente.endereco.bairro = this.form.get('bairro')?.value;
+         this.cliente.endereco.logradouro = this.form.get('logradouro')?.value;
+         this.cliente.endereco.numero = this.form.get('numero')?.value;
+         this.cliente.endereco.complemento = this.form.get('complemento')?.value;
+         this.cliente.endereco.pontoReferencia = this.form.get('pontoReferencia')?.value;
+
+         this.clientesService.atualizar(this.cliente);
+         this.modalRef?.hide();
+      }
    }
 }
