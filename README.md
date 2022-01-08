@@ -18,10 +18,10 @@ Em andamento...
 
 ```shell
 # Clone este repositório
-$ git clone <https://github.com/ericolivrib/bolicho>
+$ git clone <https://github.com/ericolivrib/bolicho-front>
 
 # Acesse a pasta do projeto no Prompt de Comando
-$ cd bolicho
+$ cd bolicho_front
 
 # Instale as dependências
 $ npm install
