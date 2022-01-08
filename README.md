@@ -36,7 +36,7 @@ $ npm start
 
 As seguintes ferramentas foram utilizadas para a construção do projeto
 
-- [Angular 12.2.3](https://angular.io/)
+- [Angular 13.0.4](https://angular.io/)
 - [Node.js 16.13.0](https://nodejs.org/pt-br/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Bootstrap 5.1](https://getbootstrap.com/)
