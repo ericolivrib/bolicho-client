@@ -5,6 +5,7 @@ export class Pedido {
 
    constructor(
       public id: number,
+      public codigo: string,
       public cliente: Cliente,
       public itens: Array<Item>,
       public dataPedido: Date,

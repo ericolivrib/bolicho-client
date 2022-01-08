@@ -1,12 +1,14 @@
-<table class="table table-bordered table-striped">
+<table class="table table-bordered">
    <thead>
       <tr class="text-center">
          <th scope="col">#</th>
+         <th scope="col">Código</th>
          <th scope="col">Cliente</th>
          <th scope="col">Itens</th>
          <th scope="col">Data do pedido</th>
          <th scope="col">Prazo de entrega</th>
          <th scope="col">Total</th>
+         <th scope="col">Status</th>
          <th scope="col">
             <i class="bi bi-gear-wide-connected"></i>
          </th>
@@ -15,24 +17,125 @@
    <tbody>
       <tr class="text-center" *ngFor="let p of pedidos; let i = index">
          <th scope="row">{{ i + 1 }}</th>
+         <td>{{ p.codigo }}</td>
          <td>{{ p.cliente.nome }}</td>
          <td>
             <button class="btn btn-sm">
-               <i class="bi bi-eye-fill"></i>
+               <i class="bi bi-eye-fill" (click)="modalItens(itensPedido, p.id)"></i>
             </button>
          </td>
          <td>{{ p.dataPedido | date:'dd/MM/yyyy' }}</td>
          <td>{{ p.prazoEntrega | date:'dd/MM/yyyy' }}</td>
          <td>{{ p.valorTotal | currency:'BRL' }}</td>
+         <td [ngSwitch]="p.status"  [ngClass]="cssFundoStatus(p.status)">
+            <i *ngSwitchCase="'Finalizado'" class="bi bi-check text-success h4"></i>
+            <i *ngSwitchCase="'Cancelado'" class="bi bi-x text-danger h3"></i>
+            <i *ngSwitchCase="'Atrasado'" class="bi bi-exclamation-triangle-fill text-warning h5"></i>
+            <i *ngSwitchCase="'Em andamento'" class="bi bi-clock-fill text-primary h5"></i>
+         </td>
          <td>
-            <button class="btn btn-warning btn-sm">
-               <i class="bi bi-pencil-fill"></i>
+            <!-- FINALIZAR PEDIDO -->
+            <button class="btn btn-success btn-sm" title="Finalizar pedido" style="margin-right: 5%;" (click)="modalAcoes(finalizar, p.id)">
+               <i class="bi bi-patch-check h6"></i>
             </button>
-            &nbsp;
-            <button class="btn btn-danger btn-sm">
-               <i class="bi bi-trash"></i>
+
+            <!-- CANCELAR PEDIDO -->
+            <button class="btn btn-danger btn-sm" title="Cancelar pedido" style="margin-right: 5%;" (click)="modalAcoes(cancelar, p.id)">
+               <i class="bi bi-x-octagon h6"></i>
+            </button>
+
+            <!-- ARQUIVAR PEDIDO -->
+            <button class="btn btn-dark btn-sm" title="Arquivar pedido" (click)="modalAcoes(arquivar, p.id)">
+               <i class="bi bi-archive h6"></i>
             </button>
          </td>
       </tr>
    </tbody>
 </table>
+
+<ng-template #itensPedido>
+   <div class="modal-header">
+      <h1 class="modal-title h5">Itens inclusos no pedido</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+         (click)="modalRef?.hide()"></button>
+   </div>
+
+   <div class="modal-body">
+      <table class="table">
+         <thead>
+            <tr>
+               <th scope="col">#</th>
+               <th scope="col">Item</th>
+               <th scope="col">Quantidade</th>
+               <th scope="col">Valor</th>
+               <th scope="col">Data de validade</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let item of itens; let i = index">
+               <th scope="row">{{ i + 1 }}</th>
+               <td>{{ item.produto.descricao }}</td>
+               <td>
+                  {{ item.quantidade }}
+                  <span [ngSwitch]="item.produto.unidadeMedida">
+                     <span *ngSwitchCase="'Unidade'">Unidades</span>
+                     <span *ngSwitchCase="'Kg'">Kg</span>
+                     <span *ngSwitchCase="'Litro'">Litros</span>
+                  </span>
+               </td>
+               <td>{{ item.valorSomatorio | currency:'BRL' }}</td>
+               <td>{{ item.dataValidade | date:'dd/MM/yyyy' }}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</ng-template>
+
+<ng-template #finalizar>
+   <div class="modal-header">
+      <h1 class="modal-title h5">Finalizar pedido número #{{ pedido.codigo }}</h1>
+   </div>
+   <div class="modal-body">
+      Deseja <span class="text-success fw-bold">finalizar</span> o pedido?
+   </div>
+   <div class="modal-footer">
+      <button class="btn btn-success mr-3" (click)="alterarStatus('Finalizado')">Sim</button>
+      <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
+   </div>
+</ng-template>
+
+<ng-template #cancelar>
+   <div class="modal-header">
+      <h1 class="modal-title h5">Cancelar pedido número #{{ pedido.codigo }}</h1>
+   </div>
+
+   <div class="modal-body">
+      Deseja <span class="text-danger fw-bold">cancelar</span> o pedido?
+   </div>
+
+   <div class="modal-footer">
+      <button class="btn btn-danger" (click)="alterarStatus('Cancelado')">Sim</button>
+      &nbsp;
+      <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
+   </div>
+</ng-template>
+
+<ng-template #arquivar>
+   <div class="modal-header">
+      <h1 class="modal-title h5">Arquivar pedido número #{{ pedido.codigo }}</h1>
+   </div>
+
+   <div class="modal-body">
+      <p>
+         <i class="bi bi-exclamation-triangle-fill text-warning h5"></i>
+         Pedidos <strong>arquivados</strong> não serão mais vistos!
+      </p>
+      Deseja continuar?
+   </div>
+
+   <div class="modal-footer">
+      <button class="btn btn-dark" (click)="arquivarPedido()">Sim</button>
+      &nbsp;
+      <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
+   </div>
+</ng-template>

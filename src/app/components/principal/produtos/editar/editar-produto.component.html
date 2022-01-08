@@ -47,10 +47,11 @@
    </tfoot>
 </table>
 
+<!-- MODAL PARA EDITAR PRODUTO -->
 <ng-template #editar>
    <form [formGroup]="formEditar" (ngSubmit)="editarProduto()">
       <div class="modal-header">
-         <h1 class="modal-title h5">Editar <font class="text-warning">{{ produto.descricao }}</font></h1>
+         <h1 class="modal-title h5">Editar <span class="text-warning">{{ produto.descricao }}</span></h1>
       </div>
 
       <div class="modal-body">
@@ -98,9 +99,10 @@
    </form>
 </ng-template>
 
+<!-- MODAL PARA REMOVER PRODUTO -->
 <ng-template #remover>
    <div class="modal-header">
-      <h1 class="modal-title h5">Remover <font class="text-danger">{{ produto.descricao }}</font>
+      <h1 class="modal-title h5">Remover <span class="text-danger">{{ produto.descricao }}</span>
       </h1>
    </div>
 
@@ -117,10 +119,11 @@
    </div>
 </ng-template>
 
+<!-- MODAL PARA ATUALIZAR A QUANTIDADE DE DETERMINADOS PRODUTOS -->
 <ng-template #atualizarQtd>
    <form class="form-group" [formGroup]="formQtd" (ngSubmit)="atualizarEstoque()">
       <div class="modal-header">
-         <div class="modal-title h5">Atualizar estoque de <font class="text-primary">{{ produto.descricao }}</font>
+         <div class="modal-title h5">Atualizar estoque de <span class="text-primary">{{ produto.descricao }}</span>
          </div>
       </div>
 

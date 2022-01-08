@@ -7,7 +7,7 @@ import { Produto } from '../model/produto';
 export class ProdutoService {
 
    private produtos: Array<Produto> = [
-      new Produto(1, "Queijo Colonial", 27.00, "Quilograma/Kg", 5)
+      new Produto(1, "Queijo Colonial", 27.00, "Kg", 5)
    ]
 
    constructor() {}
@@ -19,9 +19,9 @@ export class ProdutoService {
    getProdutoById(id: number): Produto {
       let produto!: Produto;
 
-      for (let p of this.produtos) {
-         if (p.id === id) {
-            produto = p;
+      for (produto of this.produtos) {
+         if (produto.id === id) {
+            return produto;
          }
       }
 

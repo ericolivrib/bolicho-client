@@ -49,9 +49,9 @@ export class ClienteService {
    getClienteById(id: number): Cliente {
       let cliente!: Cliente;
 
-      for (let c of this.clientes) {
-         if (c.id === id) {
-            cliente = c;
+      for (cliente of this.clientes) {
+         if (cliente.id === id) {
+            return cliente;
          }
       }
 
