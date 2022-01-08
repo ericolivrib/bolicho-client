@@ -37,6 +37,10 @@ export class PedidoService {
       private produtoService: ProdutoService
    ) {}
 
+   adicionar(pedido: Pedido): void {
+      this.pedidos.push(pedido);
+   }
+
    getPedidos(): Array<Pedido> {
       return this.pedidos;
    }

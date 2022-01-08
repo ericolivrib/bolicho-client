@@ -83,7 +83,7 @@
                      <span *ngSwitchCase="'Litro'">Litros</span>
                   </span>
                </td>
-               <td>{{ item.valorSomatorio | currency:'BRL' }}</td>
+               <td>{{ item.subtotal | currency:'BRL' }}</td>
                <td>{{ item.dataValidade | date:'dd/MM/yyyy' }}</td>
             </tr>
          </tbody>

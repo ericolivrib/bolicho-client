@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PedidosComponent } from './pedidos.component';
 import { PedidosRoutingModule } from './pedidos-routing.module';
@@ -14,7 +15,9 @@ import { VisualizarPedidosComponent } from './visualizar/visualizar-pedidos.comp
    ],
    imports: [
       CommonModule,
-      PedidosRoutingModule
+      PedidosRoutingModule,
+      FormsModule,
+      ReactiveFormsModule
    ],
 })
 export class PedidosModule {}

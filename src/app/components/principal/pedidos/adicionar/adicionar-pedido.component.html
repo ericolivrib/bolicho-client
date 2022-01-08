@@ -1,0 +1,132 @@
+<form class="form-group" [formGroup]="formPedido" (ngSubmit)="adicionarPedido()">
+   <div class="row mb-3">
+      <div class="col-4">
+         <label for="codigo" class="form-label h6">Número do pedido<span class="text-danger">*</span></label>
+         <input type="text" id="codigo" class="form-control form-control-sm" formControlName="codigo">
+      </div>
+
+      <div class="col-8">
+         <label for="cliente" class="form-label h6">Cliente<span class="text-danger">*</span></label>
+         <select id="cliente" class="form-select form-select-sm" formControlName="cliente">
+            <option selected disabled>-- Selecione um cliente --</option>
+            <option *ngFor="let c of clientes" [value]="c.id">
+               {{ c.nome }}
+            </option>
+         </select>
+      </div>
+   </div>
+
+   <hr>
+
+   <div class="row mb-5">
+
+      <!-- ITENS DO PEDIDO -->
+      <div class="col-6">
+         <div class="row mb-2">
+            <label for="total" class="col-2 col-form-label h6">Total:</label>
+            <div class="col-10">
+               <input type="number" step="0.01" id="total" class="form-control form-control-sm" formControlName="total" [value]="calcularTotal()" readonly>
+            </div>
+         </div>
+
+         <table class="table">
+            <thead>
+               <tr class="text-center">
+                  <th scope="col" class="h6">#</th>
+                  <th scope="col" class="h6">Item</th>
+                  <th scope="col" class="h6">Quantidade</th>
+                  <th scope="col" class="h6">Subtotal</th>
+                  <th scope="col" class="h6">Data de validade</th>
+                  <th scope="col" class="h6">Ações</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="text-center" *ngFor="let item of itens; let i = index">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ item.produto.descricao }}</td>
+                  <td>{{ item.quantidade }}</td>
+                  <td>{{ item.subtotal | currency:'BRL' }}</td>
+                  <td>{{ item.dataValidade | date:'dd/MM/yyyy' }}</td>
+                  <td>
+                     <button class="btn btn-sm" (click)="removerItem(item)">
+                        <i class="bi bi-trash text-danger h6"></i>
+                     </button>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+
+      <div class="col">
+         <div class="d-flex justify-content-center mt-2">
+            <div class="vr"></div>
+         </div>
+      </div>
+
+      <!-- ADICIONAR ITENS -->
+      <div class="col-5">
+         <form [formGroup]="formItens" (ngSubmit)="adicionarItem()">
+            <div class="row mb-3">
+               <div class="col">
+                  <label for="produto" class="form-label h6">Produto<span class="text-danger">*</span></label>
+                  <select id="produto" class="form-select form-select-sm" formControlName="produto">
+                     <option selected>
+                        -- Selecione um produto --
+                     </option>
+                     <option *ngFor="let produto of produtos" [value]="produto.id">
+                        {{ produto.descricao }}
+                     </option>
+                  </select>
+               </div>
+
+               <div class="col-4">
+                  <label for="quantidade" class="form-label h6">Quantidade<span class="text-danger">*</span></label>
+                  <input type="number" id="quantidade" class="form-control form-control-sm" formControlName="quantidade">
+               </div>
+            </div>
+
+            <div class="row mb-3">
+               <div class="col-5">
+                  <label for="datavalidade" class="form-label h6">Data de validade<span class="text-danger">*</span></label>
+                  <input type="date" id="dataValidade" class="form-control form-control-sm" formControlName="dataValidade">
+               </div>
+
+               <div class="col-7">
+                  <label for="subtotal" class="form-label h6">Subtotal</label>
+                  <input type="number" step="0.01" id="subtotal" class="form-control form-control-sm" formControlName="subtotal" [value]="calcularSubtotal()" readonly>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col">
+                  <button type="submit" class="btn btn-success w-100">
+                     <i class="bi bi-cart-plus"></i>
+                     &nbsp; Adicionar à lista de pedidos
+                  </button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <hr>
+
+   <div class="row mb-4">
+      <div class="col">
+         <label for="dataPedido" class="form-label h6">Data do pedido<span class="text-danger">*</span></label>
+         <input type="date" id="dataPedido" class="form-control form-control-sm" formControlName="dataPedido">
+      </div>
+
+      <div class="col">
+         <label for="prazoEntrega" class="form-label h6">Prazo de entrega<span class="text-danger">*</span></label>
+         <input type="date" id="prazoEntrega" class="form-control form-control-sm" formControlName="prazoEntrega">
+      </div>
+   </div>
+
+
+   <div class="row">
+      <div class="col">
+         <button type="submit" class="btn btn-primary float-end">Registrar pedido</button>
+      </div>
+   </div>
+</form>
