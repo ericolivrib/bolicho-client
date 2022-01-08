@@ -5,7 +5,7 @@ export class Item {
    constructor(
       public id: number,
       public produto: Produto,
-      public valorSomatorio: number,
+      public subtotal: number,
       public quantidade: number,
       public dataValidade: Date
    ) {}
