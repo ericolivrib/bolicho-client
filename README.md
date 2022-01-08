@@ -1,27 +1,42 @@
-# Bolicho
+# 🧀 Bolicho Management
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
+## Descrição
 
-## Development server
+Ambiente para o gerenciamento e controle de comércio de produtos alimentícios de diversos tipos e variações.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Status
 
-## Code scaffolding
+Em andamento...
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Pré-requisitos
 
-## Build
+- [Git](https://git-scm.com)
+- [Node.js](https://nodejs.org/pt-br/)
+- Um editor de código como [VSCode](https://code.visualstudio.com/) ou uma IDE como [Web Storm](https://www.jetbrains.com/pt-br/webstorm/)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Executando a aplicação
 
-## Running unit tests
+```shell
+# Clone este repositório
+$ git clone <https://github.com/ericolivrib/bolicho>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Acesse a pasta do projeto no Prompt de Comando
+$ cd bolicho
 
-## Running end-to-end tests
+# Instale as dependências
+$ npm install
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# Execute a aplicação
+$ npm start
 
-## Further help
+# O servidor irá rodar na porta 4200 - acesse <http://localhost:4200>
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Tecnologias
+
+As seguintes ferramentas foram utilizadas para a construção do projeto
+
+- [Angular 12.2.3](https://angular.io/)
+- [Node.js 16.13.0](https://nodejs.org/pt-br/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Bootstrap 5.1](https://getbootstrap.com/)
