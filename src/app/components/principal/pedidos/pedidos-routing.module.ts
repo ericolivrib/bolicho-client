@@ -10,7 +10,8 @@ const routes: Routes = [{
    component: PedidosComponent,
    children: [
       { path: 'adicionar', component: AdicionarPedidoComponent },
-      { path: 'visualizar', component: VisualizarPedidosComponent }
+      { path: 'visualizar', component: VisualizarPedidosComponent },
+      { path: '', redirectTo: 'visualizar', pathMatch: 'full' }
    ]
 }];
 

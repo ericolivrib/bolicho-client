@@ -11,7 +11,8 @@ const routes: Routes = [{
    component: ClientesComponent,
    children: [
       { path: 'adicionar', component: AdicionarClienteComponent, canActivate: [AuthGuard] },
-      { path: 'editar', component: EditarClienteComponent, canActivate: [AuthGuard] }
+      { path: 'editar', component: EditarClienteComponent, canActivate: [AuthGuard] },
+      { path: '', redirectTo: 'editar', pathMatch: 'full' }
    ]
 }];
 

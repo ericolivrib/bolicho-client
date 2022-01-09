@@ -11,7 +11,8 @@ const routes: Routes = [{
    component: ProdutosComponent,
    children: [
       { path: 'adicionar', component: AdicionarProdutoComponent },
-      { path: 'editar', component: EditarProdutoComponent }
+      { path: 'editar', component: EditarProdutoComponent },
+      { path: '', redirectTo: 'editar', pathMatch: 'full' }
    ]
 }];
 
