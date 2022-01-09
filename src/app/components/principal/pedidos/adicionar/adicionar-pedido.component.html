@@ -20,49 +20,6 @@
 
    <div class="row mb-5">
 
-      <!-- ITENS DO PEDIDO -->
-      <div class="col-6">
-         <div class="row mb-2">
-            <label for="total" class="col-2 col-form-label h6">Total:</label>
-            <div class="col-10">
-               <input type="number" step="0.01" id="total" class="form-control form-control-sm" formControlName="total" [value]="calcularTotal()" readonly>
-            </div>
-         </div>
-
-         <table class="table">
-            <thead>
-               <tr class="text-center">
-                  <th scope="col" class="h6">#</th>
-                  <th scope="col" class="h6">Item</th>
-                  <th scope="col" class="h6">Quantidade</th>
-                  <th scope="col" class="h6">Subtotal</th>
-                  <th scope="col" class="h6">Data de validade</th>
-                  <th scope="col" class="h6">Ações</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr class="text-center" *ngFor="let item of itens; let i = index">
-                  <th scope="row">{{ i + 1 }}</th>
-                  <td>{{ item.produto.descricao }}</td>
-                  <td>{{ item.quantidade }}</td>
-                  <td>{{ item.subtotal | currency:'BRL' }}</td>
-                  <td>{{ item.dataValidade | date:'dd/MM/yyyy' }}</td>
-                  <td>
-                     <button class="btn btn-sm" (click)="removerItem(item)">
-                        <i class="bi bi-trash text-danger h6"></i>
-                     </button>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
-
-      <div class="col">
-         <div class="d-flex justify-content-center mt-2">
-            <div class="vr"></div>
-         </div>
-      </div>
-
       <!-- ADICIONAR ITENS -->
       <div class="col-5">
          <form [formGroup]="formItens" (ngSubmit)="adicionarItem()">
@@ -106,6 +63,50 @@
                </div>
             </div>
          </form>
+      </div>
+
+      <div class="col">
+         <div class="d-flex justify-content-center mt-2">
+            <div class="vr"></div>
+         </div>
+      </div>
+
+
+      <!-- ITENS DO PEDIDO -->
+      <div class="col-6">
+         <div class="row mb-2">
+            <label for="total" class="col-2 col-form-label h6">Total:</label>
+            <div class="col-10">
+               <input type="number" step="0.01" id="total" class="form-control form-control-sm" formControlName="total" [value]="calcularTotal()" readonly>
+            </div>
+         </div>
+
+         <table class="table">
+            <thead>
+               <tr class="text-center">
+                  <th scope="col" class="h6">#</th>
+                  <th scope="col" class="h6">Item</th>
+                  <th scope="col" class="h6">Quantidade</th>
+                  <th scope="col" class="h6">Subtotal</th>
+                  <th scope="col" class="h6">Data de validade</th>
+                  <th scope="col" class="h6">Ações</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="text-center" *ngFor="let item of itens; let i = index">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ item.produto.descricao }}</td>
+                  <td>{{ item.quantidade }}</td>
+                  <td>{{ item.subtotal | currency:'BRL' }}</td>
+                  <td>{{ item.dataValidade | date:'dd/MM/yyyy' }}</td>
+                  <td>
+                     <button class="btn btn-sm" (click)="removerItem(item)">
+                        <i class="bi bi-trash text-danger h6"></i>
+                     </button>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
       </div>
    </div>
 

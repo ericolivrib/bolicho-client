@@ -13,7 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
    declarations: [
       AppComponent,
       NaoEncontradoComponent,
-      LoginComponent
+      LoginComponent,
    ],
    imports: [
       BrowserModule,
