@@ -1,13 +1,13 @@
 <table class="table">
    <thead>
       <tr class="text-center">
-         <th scope="col">#</th>
-         <th scope="col">Nome</th>
-         <th scope="col">E-mail</th>
-         <th scope="col">Telefone</th>
-         <th scope="col">CPF</th>
-         <th scope="col"><i class="bi bi-house-door-fill"></i></th>
-         <th scope="col"><i class="bi bi-gear-wide-connected"></i></th>
+         <th scope="col" class="h6">#</th>
+         <th scope="col" class="h6">Nome</th>
+         <th scope="col" class="h6">E-mail</th>
+         <th scope="col" class="h6">Telefone</th>
+         <th scope="col" class="h6">CPF</th>
+         <th scope="col" class="h6"><i class="bi bi-house-door-fill"></i></th>
+         <th scope="col" class="h6"><i class="bi bi-gear-wide-connected"></i></th>
       </tr>
    </thead>
    <tbody>
@@ -42,30 +42,30 @@
          (click)="modalRef?.hide()"></button>
    </div>
    <div class="modal-body">
-      <table class="table table-striped table-bordered">
+      <table class="table">
          <tbody>
             <tr>
-               <th scope="row">CEP</th>
+               <th scope="row" class="h6">CEP</th>
                <td>{{ endereco.cep }}</td>
             </tr>
             <tr>
-               <th scope="row">Bairro</th>
+               <th scope="row" class="h6">Bairro</th>
                <td>{{ endereco.bairro }}</td>
             </tr>
             <tr>
-               <th scope="row">Rua</th>
+               <th scope="row" class="h6">Rua</th>
                <td>{{ endereco.logradouro }}</td>
             </tr>
             <tr>
-               <th scope="row">Número</th>
+               <th scope="row" class="h6">Número</th>
                <td>{{ endereco.numero }}</td>
             </tr>
             <tr>
-               <th scope="row">Complemento</th>
+               <th scope="row" class="h6">Complemento</th>
                <td>{{ endereco.complemento }}</td>
             </tr>
             <tr>
-               <th scope="row">Ponto de Referência</th>
+               <th scope="row" class="h6">Ponto de Referência</th>
                <td>{{ endereco.pontoReferencia }}</td>
             </tr>
          </tbody>

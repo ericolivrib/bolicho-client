@@ -1,22 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark mb-4">
    <div class="container-fluid">
-      <a routerLink="/principal" class="navbar-brand fw-bold">Bolicho</a>
+      <a routerLink="principal" class="navbar-brand mb-0 h1">Bolicho</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-         <ul class="navbar-nav">
-            <li routerLink="clientes" class="nav-item" style="cursor: pointer;">
-               <a routerLinkActive="active" class="nav-link">Clientes</a>
-            </li>
-            <li routerLink="produtos" class="nav-item" style="cursor: pointer;">
-               <a routerLinkActive="active" class="nav-link">Produtos</a>
-            </li>
-            <li routerLink="pedidos" class="nav-item" style="cursor: pointer;">
-               <a routerLinkActive="active" class="nav-link">Pedidos</a>
-            </li>
-         </ul>
+
+      <div class="float-center">
+         <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav">
+               <li routerLink="clientes" class="nav-item" style="cursor: pointer;">
+                  <a routerLinkActive="active" class="nav-link">Clientes</a>
+               </li>
+               <li routerLink="produtos" class="nav-item" style="cursor: pointer;">
+                  <a routerLinkActive="active" class="nav-link">Produtos</a>
+               </li>
+               <li routerLink="pedidos" class="nav-item" style="cursor: pointer;">
+                  <a routerLinkActive="active" class="nav-link">Pedidos</a>
+               </li>
+            </ul>
+         </div>
       </div>
    </div>
 </nav>
