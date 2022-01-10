@@ -7,7 +7,9 @@ import { Produto } from '../model/produto';
 export class ProdutoService {
 
    private produtos: Array<Produto> = [
-      new Produto(1, "Queijo Colonial", 27.00, "Kg", 5)
+      new Produto(1, 'Queijo Colonial', 27.00, 'Kg', 5),
+      new Produto(2, 'Licor', 6.00, 'Unidade', 10),
+      new Produto(3, 'Chimia', 3.50, 'Unidade', 7)
    ]
 
    constructor() {}
@@ -20,7 +22,7 @@ export class ProdutoService {
       let produto!: Produto;
 
       for (produto of this.produtos) {
-         if (produto.id === id) {
+         if (produto.id == id) {
             return produto;
          }
       }
@@ -37,7 +39,13 @@ export class ProdutoService {
    }
 
    atualizarQtdEstoque(produto: Produto, quantidade: number): void {
-      this.produtos[this.produtos.indexOf(produto)].qtdEstoque += quantidade;
+      let p: Produto = this.produtos[this.produtos.indexOf(produto)];
+
+      p.qtdEstoque += quantidade;
+
+      if (p.qtdEstoque < 0) {
+         p.qtdEstoque = 0;
+      }
    }
 
    remover(produto: Produto): void {
