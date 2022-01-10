@@ -2,7 +2,7 @@
    <thead>
       <tr class="text-center">
          <th scope="col" class="h6">#</th>
-         <th scope="col" class="h6">Código</th>
+         <th scope="col" class="h6">nº</th>
          <th scope="col" class="h6">Cliente</th>
          <th scope="col" class="h6">Itens</th>
          <th scope="col" class="h6">Data do pedido</th>
@@ -35,12 +35,17 @@
          </td>
          <td>
             <!-- FINALIZAR PEDIDO -->
-            <button class="btn btn-success btn-sm" title="Finalizar pedido" style="margin-right: 5%;" (click)="modalAcoes(finalizar, p.id)">
+            <button *ngIf="p.status !== 'Finalizado' && p.status !== 'Cancelado'" class="btn btn-success btn-sm" title="Finalizar pedido" style="margin-right: 5%;" (click)="modalAcoes(finalizar, p.id)">
                <i class="bi bi-patch-check h6"></i>
             </button>
 
+            <!-- DATA DE FINALIZAÇÃO -->
+            <button *ngIf="p.status == 'Finalizado'" class="btn btn-outline-dark btn-sm" title="Data de finalização" style="margin-right: 5%;" popover="{{ p.dataFinalizacao | date: 'dd/MM/yyy' }}" popoverTitle="Data de finalização" triggers="mouseenter:mouseleave">
+               <i class="bi bi-calendar-week-fill h6"></i>
+            </button>
+
             <!-- CANCELAR PEDIDO -->
-            <button class="btn btn-danger btn-sm" title="Cancelar pedido" style="margin-right: 5%;" (click)="modalAcoes(cancelar, p.id)">
+            <button *ngIf="p.status !== 'Finalizado' && p.status !== 'Cancelado'" class="btn btn-danger btn-sm" title="Cancelar pedido" style="margin-right: 5%;" (click)="modalAcoes(cancelar, p.id)">
                <i class="bi bi-x-octagon h6"></i>
             </button>
 
@@ -94,29 +99,31 @@
 
 <!-- MODAL PARA FINALIZAR O PEDIDO -->
 <ng-template #finalizar>
+   <form (submit)="alterarStatus('Finalizado')">
    <div class="modal-header">
-      <h1 class="modal-title h5">Finalizar pedido número #{{ pedido.codigo }}</h1>
+      <h1 class="modal-title h5">Finalizar pedido n° {{ pedido.codigo }}</h1>
    </div>
    <div class="modal-body">
-      <form (submit)="alterarStatus('Finalizado')">
+
+      <!-- DATA DE FINALIZAÇÃO DO PEDIDO -->
          <div class="row">
             <label for="dataEntrega" class="col-4 col-form-label h6">Data de entrega</label>
             <div class="col-8">
-               <input type="date" id="dataEntrega" class="form-control" [formControl]="formDataEntrega">
+               <input type="date" id="dataEntrega" class="form-control" [formControl]="formDataFinalizacao">
             </div>
          </div>
-      </form>
-   </div>
-   <div class="modal-footer">
-      <button class="btn btn-success mr-3">Finalizar</button>
-      <button class="btn btn-secondary" (click)="modalRef?.hide()">Cancelar</button>
-   </div>
+      </div>
+      <div class="modal-footer">
+         <button class="btn btn-success mr-3">Finalizar</button>
+         <button class="btn btn-secondary" (click)="modalRef?.hide()">Cancelar</button>
+      </div>
+   </form>
 </ng-template>
 
 <!-- MODAL PARA CANCELAR O PEDIDO -->
 <ng-template #cancelar>
    <div class="modal-header">
-      <h1 class="modal-title h5">Cancelar pedido número #{{ pedido.codigo }}</h1>
+      <h1 class="modal-title h5">Cancelar pedido n° {{ pedido.codigo }}</h1>
    </div>
 
    <div class="modal-body">
@@ -133,7 +140,7 @@
 <!-- MODAL PARA ARQUIVAR O PEDIDO -->
 <ng-template #arquivar>
    <div class="modal-header">
-      <h1 class="modal-title h5">Arquivar pedido número #{{ pedido.codigo }}</h1>
+      <h1 class="modal-title h5">Arquivar pedido n° {{ pedido.codigo }}</h1>
    </div>
 
    <div class="modal-body">

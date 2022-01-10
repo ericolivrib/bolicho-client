@@ -16,7 +16,7 @@ export class VisualizarPedidosComponent implements OnInit {
    pedidos!: Array<Pedido>;
    pedido!: Pedido;
    itens!: Array<Item>;
-   formDataEntrega!: FormControl
+   formDataFinalizacao!: FormControl
 
    modalRef?: BsModalRef;
 
@@ -28,6 +28,7 @@ export class VisualizarPedidosComponent implements OnInit {
 
    ngOnInit(): void {
       this.pedidos = this.pedidoService.getPedidos();
+      console.log(this.pedidos);
    }
 
    modalItens(template: TemplateRef<Pedido>, id: number): void {
@@ -41,7 +42,7 @@ export class VisualizarPedidosComponent implements OnInit {
    modalAcoes(template: TemplateRef<Pedido>, id: number): void {
       this.pedido = this.pedidoService.getPedidoById(id);
 
-      this.formDataEntrega = this.fb.control(new Date(), [Validators.required]);
+      this.formDataFinalizacao = this.fb.control(new Date(), [Validators.required]);
 
       this.modalRef = this.modalService.show(template,
          Object.assign({}, { class: 'modal-md' })
@@ -50,9 +51,11 @@ export class VisualizarPedidosComponent implements OnInit {
 
    alterarStatus(status: string): void {
       this.pedido.status = status;
-      this.pedido.dataEntrega = this.formDataEntrega.value;
+      this.pedido.dataFinalizacao = this.formDataFinalizacao.value;
       this.pedidoService.atualizarStatus(this.pedido);
       this.modalRef?.hide();
+
+      console.log(this.pedido);
    }
 
    arquivarPedido(): void {
@@ -62,8 +65,8 @@ export class VisualizarPedidosComponent implements OnInit {
 
    /**
     * Atribui as cores de fundo da coluna de status do pedido de acordo com o seu estado
-    * @param status status do pedido
-    * @returns classe do Bootstrap com as cores de fundo para a coluna de status
+    * @param status andamento do pedido
+    * @returns classe do Bootstrap com as cores de fundo
     */
    cssFundoStatus(status: string): string {
       let classe!: string;
