@@ -19,16 +19,16 @@ export class PedidoService {
             new Item(
                1,
                this.produtoService.getProdutoById(1),
-               44.98,
-               1.214,
+               1.250,
+               33.75,
                new Date(2022, 2, 23),
             )
          ],
          new Date("2022/01/07"),
          new Date("2022/01/09"),
-         new Date(''),
-         44.98,
-         "Em andamento"
+         new Date("2022/01/10"),
+         33.75,
+         "Finalizado"
       )
    ];
 
@@ -62,8 +62,8 @@ export class PedidoService {
    }
 
    atualizarStatus(pedido: Pedido): void {
-      this.pedidos[this.pedidos.indexOf(pedido)].status == pedido.status;
-      this.pedidos[this.pedidos.indexOf(pedido)].dataEntrega == pedido.dataEntrega;
+      this.pedidos[this.pedidos.indexOf(pedido)].status = pedido.status;
+      this.pedidos[this.pedidos.indexOf(pedido)].dataFinalizacao = pedido.dataFinalizacao;
    }
 
    arquivarPedido(pedido: Pedido): void {
