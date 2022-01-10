@@ -6,6 +6,7 @@ import { PedidosComponent } from './pedidos.component';
 import { PedidosRoutingModule } from './pedidos-routing.module';
 import { AdicionarPedidoComponent } from './adicionar/adicionar-pedido.component';
 import { VisualizarPedidosComponent } from './visualizar/visualizar-pedidos.component';
+import { PopoverModule } from 'ngx-bootstrap/popover'
 
 @NgModule({
    declarations: [
@@ -17,7 +18,8 @@ import { VisualizarPedidosComponent } from './visualizar/visualizar-pedidos.comp
       CommonModule,
       PedidosRoutingModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      PopoverModule.forRoot()
    ],
 })
 export class PedidosModule {}
