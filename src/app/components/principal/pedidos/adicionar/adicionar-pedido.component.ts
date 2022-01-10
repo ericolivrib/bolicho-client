@@ -70,14 +70,12 @@ export class AdicionarPedidoComponent implements OnInit {
       let produto = this.produtoService.getProdutoById(id);
       let quantidade: number = this.formItens.get('quantidade')?.value;
 
-      console.log(produto);
-
       if (quantidade < 0) {
          this.formItens.get('quantidade')?.setValue(0);
-         this.formItens.get('subtotal')?.setValue(0);
+         this.calcularSubtotal();
       } else if (quantidade > produto.qtdEstoque && id != null) {
          this.formItens.get('quantidade')?.setValue(produto.qtdEstoque);
-         this.formItens.get('subtotal')?.setValue(this.formItens.get('subtotal')?.value);
+         this.calcularSubtotal();
       }
    }
 
@@ -98,8 +96,8 @@ export class AdicionarPedidoComponent implements OnInit {
          let item: Item = new Item(
             id++,
             this.produtoService.getProdutoById(this.formItens.get('produto')?.value),
-            this.formItens.get('subtotal')?.value,
             this.formItens.get('quantidade')?.value,
+            this.formItens.get('subtotal')?.value,
             this.formItens.get('dataValidade')?.value
          );
 
@@ -127,7 +125,7 @@ export class AdicionarPedidoComponent implements OnInit {
             this.itens,
             this.formPedido.get('dataPedido')?.value,
             this.formPedido.get('prazoEntrega')?.value,
-            new Date(0, 0, 0),
+            undefined,
             this.formPedido.get('total')?.value,
             'Em andamento'
          );

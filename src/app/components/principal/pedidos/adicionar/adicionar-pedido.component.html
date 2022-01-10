@@ -33,7 +33,7 @@
                   <label for="produto" class="form-label h6">Produto<span class="text-danger">*</span></label>
                   <select id="produto" class="form-select form-select-sm" formControlName="produto" (change)="calcularSubtotal()">
                      <option selected disabled>-- Selecione um produto --</option>
-                     <option *ngFor="let p of produtos" [value]="p.id">
+                     <option *ngFor="let p of produtos" [value]="p.id" [disabled]="p.qtdEstoque <= 0">
                         {{ p.descricao }}
                      </option>
                   </select>
