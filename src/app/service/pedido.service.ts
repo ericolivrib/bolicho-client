@@ -13,7 +13,7 @@ export class PedidoService {
    private pedidos: Array<Pedido> = [
       new Pedido(
          1,
-         "00001",
+         "0001",
          this.clienteService.getClienteById(1),
          [
             new Item(
@@ -26,7 +26,7 @@ export class PedidoService {
          ],
          new Date("2022/01/07"),
          new Date("2022/01/09"),
-         new Date(),
+         new Date(''),
          44.98,
          "Em andamento"
       )
@@ -39,13 +39,17 @@ export class PedidoService {
 
    adicionar(pedido: Pedido): void {
       this.pedidos.push(pedido);
+
+      for (let item of pedido.itens) {
+         this.produtoService.atualizarQtdEstoque(item.produto, -item.quantidade);
+      }
    }
 
    getPedidos(): Array<Pedido> {
       return this.pedidos;
    }
 
-   getPedidosById(id: number): Pedido {
+   getPedidoById(id: number): Pedido {
       let pedido!: Pedido;
 
       for (pedido of this.pedidos) {
@@ -59,6 +63,7 @@ export class PedidoService {
 
    atualizarStatus(pedido: Pedido): void {
       this.pedidos[this.pedidos.indexOf(pedido)].status == pedido.status;
+      this.pedidos[this.pedidos.indexOf(pedido)].dataEntrega == pedido.dataEntrega;
    }
 
    arquivarPedido(pedido: Pedido): void {

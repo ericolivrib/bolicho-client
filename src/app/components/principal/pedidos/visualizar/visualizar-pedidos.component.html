@@ -53,6 +53,7 @@
    </tbody>
 </table>
 
+<!-- MODAL DE ITENS DO PEDIDO -->
 <ng-template #itensPedido>
    <div class="modal-header">
       <h1 class="modal-title h5">Itens inclusos no pedido</h1>
@@ -91,19 +92,28 @@
    </div>
 </ng-template>
 
+<!-- MODAL PARA FINALIZAR O PEDIDO -->
 <ng-template #finalizar>
    <div class="modal-header">
       <h1 class="modal-title h5">Finalizar pedido número #{{ pedido.codigo }}</h1>
    </div>
    <div class="modal-body">
-      Deseja <span class="text-success fw-bold">finalizar</span> o pedido?
+      <form (submit)="alterarStatus('Finalizado')">
+         <div class="row">
+            <label for="dataEntrega" class="col-4 col-form-label h6">Data de entrega</label>
+            <div class="col-8">
+               <input type="date" id="dataEntrega" class="form-control" [formControl]="formDataEntrega">
+            </div>
+         </div>
+      </form>
    </div>
    <div class="modal-footer">
-      <button class="btn btn-success mr-3" (click)="alterarStatus('Finalizado')">Sim</button>
-      <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
+      <button class="btn btn-success mr-3">Finalizar</button>
+      <button class="btn btn-secondary" (click)="modalRef?.hide()">Cancelar</button>
    </div>
 </ng-template>
 
+<!-- MODAL PARA CANCELAR O PEDIDO -->
 <ng-template #cancelar>
    <div class="modal-header">
       <h1 class="modal-title h5">Cancelar pedido número #{{ pedido.codigo }}</h1>
@@ -120,6 +130,7 @@
    </div>
 </ng-template>
 
+<!-- MODAL PARA ARQUIVAR O PEDIDO -->
 <ng-template #arquivar>
    <div class="modal-header">
       <h1 class="modal-title h5">Arquivar pedido número #{{ pedido.codigo }}</h1>

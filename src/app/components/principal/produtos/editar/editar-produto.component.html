@@ -80,7 +80,7 @@
       </div>
 
       <div class="modal-footer">
-         <button type="submit" class="btn btn-warning" (click)="editarProduto()">Editar</button>
+         <button type="submit" class="btn btn-warning">Editar</button>
          &nbsp;
          <button type="submit" class="btn btn-secondary" (click)="this.modalRef?.hide()">Cancelar</button>
       </div>
@@ -107,7 +107,7 @@
    </div>
 </ng-template>
 
-<!-- MODAL PARA ATUALIZAR A QUANTIDADE DE DETERMINADOS PRODUTOS -->
+<!-- MODAL PARA ATUALIZAR O ESTOQUE DE DETERMINADOS PRODUTOS -->
 <ng-template #atualizarQtd>
    <form class="form-group" [formGroup]="formQtd" (ngSubmit)="atualizarEstoque()">
       <div class="modal-header">
@@ -125,7 +125,7 @@
       </div>
 
       <div class="modal-footer">
-         <button type="submit" class="btn btn-warning" (click)="atualizarEstoque()">Adicionar</button>
+         <button type="submit" class="btn btn-warning">Adicionar</button>
          &nbsp;
          <button type="submit" class="btn btn-secondary" (click)="this.modalRef?.hide()">Cancelar</button>
       </div>
