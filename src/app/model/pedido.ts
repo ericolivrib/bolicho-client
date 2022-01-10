@@ -10,7 +10,7 @@ export class Pedido {
       public itens: Array<Item>,
       public dataPedido: Date,
       public prazoEntrega: Date,
-      public dataEntrega: Date,
+      public dataFinalizacao: Date | undefined,
       public valorTotal: number,
       public status: string
    ) {}
