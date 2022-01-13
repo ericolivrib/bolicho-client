@@ -4,6 +4,7 @@ import { Item } from '../model/item';
 import { Pedido } from '../model/pedido';
 import { ClienteService } from './cliente.service';
 import { ProdutoService } from './produto.service';
+import {Endereco} from "../model/endereco";
 
 @Injectable({
    providedIn: 'root'
@@ -13,7 +14,7 @@ export class PedidoService {
    private pedidos: Array<Pedido> = [
       new Pedido(
          1,
-         "0001",
+         1,
          this.clienteService.getClienteById(1),
          [
             new Item(
@@ -24,6 +25,15 @@ export class PedidoService {
                new Date(2022, 2, 23),
             )
          ],
+         new Endereco(
+            1,
+            '97105-900',
+            'Camobi',
+            'Avenida Roraima',
+            1405,
+            'CEU II - Bloco',
+            'Ao lado da União Universitária'
+         ),
          new Date("2022/01/07"),
          new Date("2022/01/09"),
          new Date("2022/01/10"),
@@ -38,6 +48,7 @@ export class PedidoService {
    ) {}
 
    adicionar(pedido: Pedido): void {
+      pedido.id = this.pedidos.length + 1;
       this.pedidos.push(pedido);
 
       for (let item of pedido.itens) {
@@ -61,12 +72,12 @@ export class PedidoService {
       return pedido;
    }
 
-   atualizarStatus(pedido: Pedido): void {
+   alterarStatus(pedido: Pedido): void {
       this.pedidos[this.pedidos.indexOf(pedido)].status = pedido.status;
-      this.pedidos[this.pedidos.indexOf(pedido)].dataFinalizacao = pedido.dataFinalizacao;
+      this.pedidos[this.pedidos.indexOf(pedido)].dataFinalizado = pedido.dataFinalizado;
    }
 
-   arquivarPedido(pedido: Pedido): void {
-      this.pedidos.splice(this.pedidos.indexOf(pedido, 1))
+   arquivar(pedido: Pedido): void {
+      this.pedidos.splice(this.pedidos.indexOf(pedido), 1);
    }
 }

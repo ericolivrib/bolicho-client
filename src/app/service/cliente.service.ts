@@ -8,23 +8,14 @@ import { Endereco } from '../model/endereco';
 })
 export class ClienteService {
 
-   private clientes: Array<Cliente> = [
+   private clientes: Cliente[] = [
       new Cliente(
          1,
          'Fulano',
          'fulano@email.com',
          '(55) 99999-9999',
          '000.000.000-00',
-         true,
-         new Endereco(
-            1,
-            '44444-444',
-            'Camobi',
-            'Avenida Roraima',
-            1405,
-            'CEU II - Bloco',
-            'Ao lado da União Universitária'
-         )
+         true
       )
    ];
 
@@ -34,12 +25,12 @@ export class ClienteService {
       this.clientes.push(cliente);
    }
 
-   getClientes(): Array<Cliente> {
+   getClientes(): Cliente[] {
       return this.clientes;
    }
 
    remover(cliente: Cliente): void {
-      this.clientes.splice(this.clientes.indexOf(cliente, 1));
+      this.clientes.splice(this.clientes.indexOf(cliente), 1);
    }
 
    atualizar(cliente: Cliente): void {

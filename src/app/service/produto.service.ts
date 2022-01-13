@@ -6,7 +6,7 @@ import { Produto } from '../model/produto';
 })
 export class ProdutoService {
 
-   private produtos: Array<Produto> = [
+   private produtos: Produto[] = [
       new Produto(1, 'Queijo Colonial', 27.00, 'Kg', 5),
       new Produto(2, 'Licor', 6.00, 'Unidade', 10),
       new Produto(3, 'Chimia', 3.50, 'Unidade', 7)
@@ -14,7 +14,7 @@ export class ProdutoService {
 
    constructor() {}
 
-   getProdutos(): Array<Produto> {
+   getProdutos(): Produto[] {
       return this.produtos;
    }
 
@@ -31,6 +31,8 @@ export class ProdutoService {
    }
 
    adicionar(produto: Produto): void {
+      produto.id = this.produtos.length + 1;
+      produto.qtdEstoque = 0;
       this.produtos.push(produto);
    }
 
@@ -49,6 +51,6 @@ export class ProdutoService {
    }
 
    remover(produto: Produto): void {
-      this.produtos.splice(this.produtos.indexOf(produto, 1));
+      this.produtos.splice(this.produtos.indexOf(produto), 1);
    }
 }
