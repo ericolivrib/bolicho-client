@@ -1,39 +1,34 @@
 <form [formGroup]="form" (ngSubmit)="adicionar()">
-   <div class="row g-2">
+   <div class="row mb-3">
 
       <!-- DESCRIÇÃO -->
       <div class="col">
-         <div class="mb-3">
-            <label for="descricao" class="form-label h6">Descrição<span class="text-danger">*</span></label>
-            <input type="text" id="descricao" class="form-control form-control-sm" formControlName="descricao">
-         </div>
+         <label for="descricao" class="form-label h6">Descrição<span class="text-danger">*</span></label>
+         <input type="text" id="descricao" class="form-control form-control-sm" formControlName="descricao">
       </div>
    </div>
 
-   <div class="row g-2">
+   <div class="row mb-3">
+
       <!-- PREÇO UNITÁRIO -->
       <div class="col">
-         <div class="mb-3">
-            <label for="precoUnitario" class="form-label h6">Preço unitário<span class="text-danger">*</span></label>
-            <input type="text" id="precoUnitario" class="form-control form-control-sm" formControlName="precoUnitario">
-         </div>
+         <label for="precoUnitario" class="form-label h6">Preço unitário<span class="text-danger">*</span></label>
+         <input type="number" step="0.01" id="precoUnitario" class="form-control form-control-sm" formControlName="precoUnitario">
       </div>
 
       <!-- UNIDADE DE MEDIDA -->
       <div class="col">
-         <div class="mb-3">
-            <label for="unidadeMedida" class="form-label h6">Unidade de medida<span class="text-danger">*</span></label>
-            <select id="unidadeMedida" class="form-select form-select-sm" formControlName="unidadeMedida">
-               <option selected disabled>-- Selecione a unidade de medida --</option>
-               <option value="Kg">Quilograma/Kg</option>
-               <option value="Unidade">Unidade/unid.</option>
-               <option value="Litro">Litro/L</option>
-            </select>
-         </div>
+         <label for="unidadeMedida" class="form-label h6">Unidade de medida<span class="text-danger">*</span></label>
+         <select id="unidadeMedida" class="form-select form-select-sm" formControlName="unidadeMedida">
+            <option selected disabled>-- Selecione a unidade de medida --</option>
+            <option value="Kg">Quilograma/Kg</option>
+            <option value="Unidade">Unidade/unid.</option>
+            <option value="Litro">Litro/L</option>
+         </select>
       </div>
    </div>
 
-   <div class="row">
+   <div class="row mb-3">
       <div class="col">
          <button type="submit" class="btn btn-primary">Adicionar</button>
       </div>
