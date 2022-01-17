@@ -26,13 +26,7 @@ export class AdicionarClienteComponent implements OnInit {
          nome: [null, [Validators.required]],
          email: [null, [Validators.required, Validators.email]],
          telefone: [null, [Validators.required]],
-         cpf: [null],
-         cep: [null],
-         bairro: [null, [Validators.required]],
-         logradouro: [null, [Validators.required]],
-         numero: [null, [Validators.required]],
-         complemento: [null],
-         pontoReferencia: [null]
+         cpf: [null]
       });
    }
 
@@ -47,15 +41,6 @@ export class AdicionarClienteComponent implements OnInit {
             this.formulario.get('telefone')?.value,
             this.formulario.get('cpf')?.value,
             true,
-            new Endereco(
-               1,
-               this.formulario.get('cep')?.value,
-               this.formulario.get('bairro')?.value,
-               this.formulario.get('logradouro')?.value,
-               this.formulario.get('numero')?.value,
-               this.formulario.get('complemento')?.value,
-               this.formulario.get('pontoReferencia')?.value
-            )
          );
 
          this.clientesService.adicionar(this.cliente);
