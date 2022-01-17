@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Cliente } from 'src/app/model/cliente';
-import { Endereco } from 'src/app/model/endereco';
 import { ClienteService } from 'src/app/service/cliente.service';
 
 @Component({
@@ -12,9 +10,7 @@ import { ClienteService } from 'src/app/service/cliente.service';
 })
 export class AdicionarClienteComponent implements OnInit {
 
-   public cliente!: Cliente;
-   public endereco!: Endereco;
-   public formulario!: FormGroup;
+   public form!: FormGroup;
 
    constructor(
       private clientesService: ClienteService,
@@ -22,7 +18,7 @@ export class AdicionarClienteComponent implements OnInit {
    ) {}
 
    ngOnInit(): void {
-      this.formulario = this.formBuilder.group({
+      this.form = this.formBuilder.group({
          nome: [null, [Validators.required]],
          email: [null, [Validators.required, Validators.email]],
          telefone: [null, [Validators.required]],
@@ -31,22 +27,11 @@ export class AdicionarClienteComponent implements OnInit {
    }
 
    adicionar(): void {
-      console.log(this.formulario.value);
+      console.log(this.form.value);
 
-      if (this.formulario.valid) {
-         this.cliente = new Cliente(
-            this.clientesService.getClientes().length + 1,
-            this.formulario.get('nome')?.value,
-            this.formulario.get('email')?.value,
-            this.formulario.get('telefone')?.value,
-            this.formulario.get('cpf')?.value,
-            true,
-         );
-
-         this.clientesService.adicionar(this.cliente);
-         this.formulario.reset();
-
-         console.log(this.cliente);
+      if (this.form.valid) {
+         this.clientesService.adicionar(this.form.value);
+         this.form.reset();
       }
    }
 }

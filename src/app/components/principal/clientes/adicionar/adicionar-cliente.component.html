@@ -1,4 +1,4 @@
-<form [formGroup]="formulario" (ngSubmit)="adicionar()">
+<form [formGroup]="form" (ngSubmit)="adicionar()">
    <div class="row g-2">
 
       <!-- NOME -->
@@ -31,7 +31,7 @@
       <!-- CPF -->
       <div class="col-3">
          <div class="mb-3">
-            <label for="cpf" class="form-label h6">CPF<span class="text-danger">*</span></label>
+            <label for="cpf" class="form-label h6">CPF</label>
             <input type="text" class="form-control form-control-sm" id="cpf" formControlName="cpf">
          </div>
       </div>
