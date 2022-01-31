@@ -9,6 +9,7 @@
          <th scope="col" class="h6">Prazo de entrega</th>
          <th scope="col" class="h6">Total</th>
          <th scope="col" class="h6">Status</th>
+         <th scope="col" class="h6">Endereço de entrega</th>
          <th scope="col" class="h6">
             <i class="bi bi-gear-wide-connected"></i>
          </th>
@@ -17,16 +18,16 @@
    <tbody>
       <tr class="text-center" *ngFor="let p of pedidos; let i = index">
          <th scope="row">{{ i + 1 }}</th>
-         <td>{{ p.codigo }}</td>
+         <td>{{ p.numPedido }}</td>
          <td>{{ p.cliente.nome }}</td>
          <td>
             <button class="btn btn-sm">
-               <i class="bi bi-eye-fill" (click)="modalItens(itensPedido, p.id)"></i>
+               <i class="bi bi-eye-fill" (click)="modalItens(modalItensPedido, p.id)"></i>
             </button>
          </td>
          <td>{{ p.dataPedido | date:'dd/MM/yyyy' }}</td>
-         <td>{{ p.prazoEntrega | date:'dd/MM/yyyy' }}</td>
-         <td>{{ p.valorTotal | currency:'BRL' }}</td>
+         <td>{{ p.dataEntrega | date:'dd/MM/yyyy' }}</td>
+         <td>{{ p.total | currency:'BRL' }}</td>
          <td [ngSwitch]="p.status"  [ngClass]="cssFundoStatus(p.status)">
             <i *ngSwitchCase="'Finalizado'" class="bi bi-check text-success h4"></i>
             <i *ngSwitchCase="'Cancelado'" class="bi bi-x text-danger h3"></i>
@@ -34,23 +35,28 @@
             <i *ngSwitchCase="'Em andamento'" class="bi bi-clock-fill text-primary h5"></i>
          </td>
          <td>
+            <button class="btn btn-sm" (click)="modalEndereco(modalEnderecoEntrega, p.id)">
+               <i class="bi bi-eye-fill"></i>
+            </button>
+         </td>
+         <td>
             <!-- FINALIZAR PEDIDO -->
-            <button *ngIf="p.status !== 'Finalizado' && p.status !== 'Cancelado'" class="btn btn-success btn-sm" title="Finalizar pedido" style="margin-right: 5%;" (click)="modalAcoes(finalizar, p.id)">
+            <button *ngIf="p.status !== 'Finalizado' && p.status !== 'Cancelado'" class="btn btn-success btn-sm" title="Finalizar pedido" style="margin-right: 5%;" (click)="modalAcoes(modalFinalizar, p.id)">
                <i class="bi bi-patch-check h6"></i>
             </button>
 
             <!-- DATA DE FINALIZAÇÃO -->
-            <button *ngIf="p.status == 'Finalizado'" class="btn btn-outline-dark btn-sm" title="Data de finalização" style="margin-right: 5%;" popover="{{ p.dataFinalizacao | date: 'dd/MM/yyy' }}" popoverTitle="Data de finalização" triggers="mouseenter:mouseleave">
+            <button *ngIf="p.status == 'Finalizado'" class="btn btn-outline-dark btn-sm" title="Data de finalização" style="margin-right: 5%;" popover="{{ p.dataFinalizado | date: 'dd/MM/yyy' }}" popoverTitle="Data de finalização" triggers="mouseenter:mouseleave">
                <i class="bi bi-calendar-week-fill h6"></i>
             </button>
 
             <!-- CANCELAR PEDIDO -->
-            <button *ngIf="p.status !== 'Finalizado' && p.status !== 'Cancelado'" class="btn btn-danger btn-sm" title="Cancelar pedido" style="margin-right: 5%;" (click)="modalAcoes(cancelar, p.id)">
+            <button *ngIf="p.status !== 'Finalizado' && p.status !== 'Cancelado'" class="btn btn-danger btn-sm" title="Cancelar pedido" style="margin-right: 5%;" (click)="modalAcoes(modalCancelar, p.id)">
                <i class="bi bi-x-octagon h6"></i>
             </button>
 
             <!-- ARQUIVAR PEDIDO -->
-            <button class="btn btn-dark btn-sm" title="Arquivar pedido" (click)="modalAcoes(arquivar, p.id)">
+            <button class="btn btn-dark btn-sm" title="Arquivar pedido" (click)="modalAcoes(modalArquivar, p.id)">
                <i class="bi bi-archive h6"></i>
             </button>
          </td>
@@ -58,8 +64,50 @@
    </tbody>
 </table>
 
+<ng-template #modalEnderecoEntrega>
+   <div class="modal-header">
+      <h1 class="modal-title h5">Endereço de entrega</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              (click)="modalRef?.hide()"></button>
+   </div>
+   <div class="modal-body">
+      <table class="table">
+         <tbody>
+         <tr>
+            <th scope="row" class="h6">CEP</th>
+            <td>{{ enderecoEntrega.cep }}</td>
+         </tr>
+         <tr>
+            <th scope="row" class="h6">Bairro</th>
+            <td>{{ enderecoEntrega.bairro }}</td>
+         </tr>
+         <tr>
+            <th scope="row" class="h6">Rua</th>
+            <td>{{ enderecoEntrega.logradouro }}</td>
+         </tr>
+         <tr>
+            <th scope="row" class="h6">Número</th>
+            <td>{{ enderecoEntrega.numero }}</td>
+         </tr>
+         <tr>
+            <th scope="row" class="h6">Complemento</th>
+            <td>{{ enderecoEntrega.complemento }}</td>
+         </tr>
+         <tr>
+            <th scope="row" class="h6">Ponto de Referência</th>
+            <td>{{ enderecoEntrega.pontoReferencia }}</td>
+         </tr>
+         </tbody>
+      </table>
+   </div>
+
+   <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="modalRef?.hide()">Fechar</button>
+   </div>
+</ng-template>
+
 <!-- MODAL DE ITENS DO PEDIDO -->
-<ng-template #itensPedido>
+<ng-template #modalItensPedido>
    <div class="modal-header">
       <h1 class="modal-title h5">Itens inclusos no pedido</h1>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
@@ -98,18 +146,17 @@
 </ng-template>
 
 <!-- MODAL PARA FINALIZAR O PEDIDO -->
-<ng-template #finalizar>
-   <form (submit)="alterarStatus('Finalizado')">
+<ng-template #modalFinalizar>
+   <form [formGroup]="formFinalizacao" (submit)="alterarStatus('Finalizado')">
    <div class="modal-header">
-      <h1 class="modal-title h5">Finalizar pedido n° {{ pedido.codigo }}</h1>
+      <h1 class="modal-title h5">Finalizar pedido n° {{ pedido.numPedido }}</h1>
    </div>
    <div class="modal-body">
-
       <!-- DATA DE FINALIZAÇÃO DO PEDIDO -->
          <div class="row">
-            <label for="dataEntrega" class="col-4 col-form-label h6">Data de entrega</label>
+            <label for="dataFinalizado" class="col-4 col-form-label h6">Data de entrega</label>
             <div class="col-8">
-               <input type="date" id="dataEntrega" class="form-control" [formControl]="formDataFinalizacao">
+               <input type="date" id="dataFinalizado" class="form-control" formControlName="dataFinalizado">
             </div>
          </div>
       </div>
@@ -121,9 +168,9 @@
 </ng-template>
 
 <!-- MODAL PARA CANCELAR O PEDIDO -->
-<ng-template #cancelar>
+<ng-template #modalCancelar>
    <div class="modal-header">
-      <h1 class="modal-title h5">Cancelar pedido n° {{ pedido.codigo }}</h1>
+      <h1 class="modal-title h5">Cancelar pedido n° {{ pedido.numPedido }}</h1>
    </div>
 
    <div class="modal-body">
@@ -138,9 +185,9 @@
 </ng-template>
 
 <!-- MODAL PARA ARQUIVAR O PEDIDO -->
-<ng-template #arquivar>
+<ng-template #modalArquivar>
    <div class="modal-header">
-      <h1 class="modal-title h5">Arquivar pedido n° {{ pedido.codigo }}</h1>
+      <h1 class="modal-title h5">Arquivar pedido n° {{ pedido.numPedido }}</h1>
    </div>
 
    <div class="modal-body">

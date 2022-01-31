@@ -1,10 +1,11 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 import { Pedido } from 'src/app/model/pedido';
 import { Item } from 'src/app/model/item';
+import { Endereco } from 'src/app/model/endereco';
 import { PedidoService } from 'src/app/service/pedido.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
    selector: 'app-visualizar-pedidos',
@@ -13,10 +14,11 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 })
 export class VisualizarPedidosComponent implements OnInit {
 
-   pedidos!: Array<Pedido>;
-   pedido!: Pedido;
-   itens!: Array<Item>;
-   formDataFinalizacao!: FormControl
+   pedidos!: Pedido[];
+   pedido: Pedido;
+   itens: Item[];
+   enderecoEntrega: Endereco;
+   formFinalizacao!: FormGroup;
 
    modalRef?: BsModalRef;
 
@@ -24,15 +26,26 @@ export class VisualizarPedidosComponent implements OnInit {
       private pedidoService: PedidoService,
       private modalService: BsModalService,
       private fb: FormBuilder
-   ) {}
+   ) {
+      this.pedido = new Pedido();
+      this.itens = [];
+      this.enderecoEntrega = new Endereco();
+   }
 
    ngOnInit(): void {
       this.pedidos = this.pedidoService.getPedidos();
-      console.log(this.pedidos);
    }
 
-   modalItens(template: TemplateRef<Pedido>, id: number): void {
+   modalItens(template: TemplateRef<Item[]>, id: number): void {
       this.itens = this.pedidoService.getPedidoById(id).itens;
+
+      this.modalRef = this.modalService.show(template,
+         Object.assign({}, { class: 'modal-lg' })
+      );
+   }
+
+   modalEndereco(template: TemplateRef<Endereco>, id: number): void {
+      this.enderecoEntrega = this.pedidoService.getPedidoById(id).localEntrega;
 
       this.modalRef = this.modalService.show(template,
          Object.assign({}, { class: 'modal-lg' })
@@ -42,7 +55,9 @@ export class VisualizarPedidosComponent implements OnInit {
    modalAcoes(template: TemplateRef<Pedido>, id: number): void {
       this.pedido = this.pedidoService.getPedidoById(id);
 
-      this.formDataFinalizacao = this.fb.control(new Date(), [Validators.required]);
+      this.formFinalizacao = this.fb.group({
+         dataFinalizado: [Date.parse(Date.now().toString()), [Validators.required]]
+      });
 
       this.modalRef = this.modalService.show(template,
          Object.assign({}, { class: 'modal-md' })
@@ -51,15 +66,23 @@ export class VisualizarPedidosComponent implements OnInit {
 
    alterarStatus(status: string): void {
       this.pedido.status = status;
-      this.pedido.dataFinalizacao = this.formDataFinalizacao.value;
-      this.pedidoService.atualizarStatus(this.pedido);
-      this.modalRef?.hide();
+
+      if (status === 'Finalizado') {
+         if (this.formFinalizacao.valid) {
+            this.pedido.dataFinalizado = this.formFinalizacao.get('dataFinalizado')?.value;
+            this.pedidoService.alterarStatus(this.pedido);
+            this.modalRef?.hide();
+         }
+      } else {
+         this.pedidoService.alterarStatus(this.pedido);
+         this.modalRef?.hide();
+      }
 
       console.log(this.pedido);
    }
 
    arquivarPedido(): void {
-      this.pedidoService.arquivarPedido(this.pedido);
+      this.pedidoService.arquivar(this.pedido);
       this.modalRef?.hide();
    }
 

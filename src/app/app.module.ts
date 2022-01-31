@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NaoEncontradoComponent } from './components/nao-encontrado/nao-encontrado.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
    declarations: [
       AppComponent,
-      NaoEncontradoComponent,
+      NotFoundComponent,
       LoginComponent,
    ],
    imports: [

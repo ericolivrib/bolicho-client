@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { Cliente } from '../model/cliente';
-import { Endereco } from '../model/endereco';
 
 @Injectable({
    providedIn: 'root'
@@ -22,6 +21,7 @@ export class ClienteService {
    constructor() {}
 
    adicionar(cliente: Cliente): void {
+      cliente.id = this.clientes.length + 1;
       this.clientes.push(cliente);
    }
 

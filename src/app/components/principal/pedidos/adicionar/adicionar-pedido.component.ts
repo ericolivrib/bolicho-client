@@ -6,6 +6,7 @@ import { Cliente } from 'src/app/model/cliente';
 import { Item } from 'src/app/model/item';
 import { Pedido } from 'src/app/model/pedido';
 import { Produto } from 'src/app/model/produto';
+import { Endereco } from 'src/app/model/endereco';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { PedidoService } from 'src/app/service/pedido.service';
 import { ProdutoService } from 'src/app/service/produto.service';
@@ -17,10 +18,15 @@ import { ProdutoService } from 'src/app/service/produto.service';
 })
 export class AdicionarPedidoComponent implements OnInit {
 
-   pedido!: Pedido;
-   itens: Array<Item> = [];
-   produtos!: Array<Produto>;
-   clientes!: Array<Cliente>;
+   pedido: Pedido = new Pedido();
+   item: Item = new Item();
+   itens: Item[] = [];
+   produto: Produto = new Produto();
+   produtos!: Produto[];
+   cliente: Cliente = new Cliente();
+   clientes!: Cliente[];
+   endereco: Endereco = new Endereco()
+
    formPedido!: FormGroup;
    formItens!: FormGroup;
 
@@ -30,28 +36,50 @@ export class AdicionarPedidoComponent implements OnInit {
       private clienteService: ClienteService,
       private fb: FormBuilder,
       private router: Router,
-   ) { }
+   ) {}
 
    ngOnInit(): void {
       this.clientes = this.clienteService.getClientes();
       this.produtos = this.produtoService.getProdutos();
 
       this.formPedido = this.fb.group({
-         codigo: [null, [Validators.required]],
+         numPedido: [null, [Validators.required]],
          cliente: [null, [Validators.required]],
          dataPedido: [null, [Validators.required]],
-         prazoEntrega: [null, [Validators.required]],
-         total: [null]
+         dataEntrega: [null, [Validators.required]],
+         total: [null],
+
+         endereco: this.fb.group({
+            cep: [null],
+            bairro: [null, [Validators.required]],
+            logradouro: [null, [Validators.required]],
+            numero: [null, [Validators.required]],
+            complemento: [null],
+            pontoReferencia: [null]
+         })
       });
 
       this.formItens = this.fb.group({
          produto: [null, [Validators.required]],
          dataValidade: [null, [Validators.required]],
-         quantidade: [null, [Validators.required, Validators.min(0)]],
+         quantidade: [null, [Validators.required, Validators.min(0.001)]],
          subtotal: [null]
       });
    }
 
+   arredondarQtd(): void {
+      let produto: Produto = this.produtoService.getProdutoById(this.formItens.get('produto')?.value);
+
+      if (produto.unidadeMedida === 'Unidade') {
+         let quantidade: number = this.formItens.get('quantidade')?.value;
+         this.formItens.get('quantidade')?.setValue(Math.round(quantidade));
+         this.calcularSubtotal();
+      }
+   }
+
+   /**
+    * Calcula dinamicamente o subtotal do 'item' de acordo com sua quantidade
+    */
    calcularSubtotal(): void {
       let id = this.formItens.get('produto')?.value;
 
@@ -90,21 +118,15 @@ export class AdicionarPedidoComponent implements OnInit {
    }
 
    adicionarItem(): void {
-      let id = 1;
-
       if (this.formItens.valid) {
-         let item: Item = new Item(
-            id++,
-            this.produtoService.getProdutoById(this.formItens.get('produto')?.value),
-            this.formItens.get('quantidade')?.value,
-            this.formItens.get('subtotal')?.value,
-            this.formItens.get('dataValidade')?.value
-         );
+         let id: number = 0;
+         this.item.id = ++id;
 
-         this.itens.push(item);
+         this.item = this.formItens.value;
+         this.item.produto = this.produtoService.getProdutoById(this.formItens.get('produto')?.value);
 
+         this.itens.push(this.item);
          this.calcularTotal();
-
          this.formItens.reset();
       }
    }
@@ -115,20 +137,12 @@ export class AdicionarPedidoComponent implements OnInit {
    }
 
    adicionarPedido(): void {
-      let id = 1;
-
-      if (this.formPedido.valid && this.itens !== null) {
-         this.pedido = new Pedido(
-            ++id,
-            this.formPedido.get('codigo')?.value,
-            this.clienteService.getClienteById(this.formPedido.get('cliente')?.value),
-            this.itens,
-            this.formPedido.get('dataPedido')?.value,
-            this.formPedido.get('prazoEntrega')?.value,
-            undefined,
-            this.formPedido.get('total')?.value,
-            'Em andamento'
-         );
+      if (this.formPedido.valid) {
+         this.pedido = this.formPedido.value;
+         this.pedido.status = 'Em andamento';
+         this.pedido.cliente = this.clienteService.getClienteById(this.formPedido.get('cliente')?.value);
+         this.pedido.localEntrega = this.formPedido.get('endereco')?.value;
+         this.pedido.itens = this.itens;
 
          this.pedidoService.adicionar(this.pedido);
 

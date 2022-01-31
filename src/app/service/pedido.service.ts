@@ -14,7 +14,7 @@ export class PedidoService {
    private pedidos: Array<Pedido> = [
       new Pedido(
          1,
-         1,
+         "0001",
          this.clienteService.getClienteById(1),
          [
             new Item(

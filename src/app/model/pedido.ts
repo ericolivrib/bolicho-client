@@ -8,23 +8,23 @@ export class Pedido {
    public numPedido: string;
    public cliente: Cliente;
    public itens: Item[];
-   public enderecoEntrega: Endereco;
+   public localEntrega: Endereco;
    public dataPedido: Date;
    public dataEntrega: Date;
    public dataFinalizado: Date;
-   public valorTotal: number;
+   public total: number;
    public status: string;
 
-   constructor(id?: number, numPedido?: string, cliente?: Cliente, itens?: Item[], enderecoEntrega?: Endereco, dataPedido?: Date, dataEntrega?: Date, dataFinalizado?: Date, valorTotal?: number, status?: string) {
+   constructor(id?: number, numPedido?: string, cliente?: Cliente, itens?: Item[], localEntrega?: Endereco, dataPedido?: Date, dataEntrega?: Date, dataFinalizado?: Date, total?: number, status?: string) {
       this.id = <number>id;
       this.numPedido = <string>numPedido;
       this.cliente = <Cliente>cliente;
       this.itens = <Item[]>itens;
-      this.enderecoEntrega = <Endereco>enderecoEntrega;
+      this.localEntrega = <Endereco>localEntrega;
       this.dataPedido = <Date>dataPedido;
       this.dataEntrega = <Date>dataEntrega;
       this.dataFinalizado = <Date>dataFinalizado;
-      this.valorTotal = <number>valorTotal;
+      this.total = <number>total;
       this.status = <string>status;
    }
 }
