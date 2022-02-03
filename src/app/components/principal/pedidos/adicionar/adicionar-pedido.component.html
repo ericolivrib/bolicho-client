@@ -1,4 +1,4 @@
-<form class="form-group" [formGroup]="formPedido" (ngSubmit)="adicionarPedido()">
+<form class="form-group" [formGroup]="formPedido" (ngSubmit)="salvar()">
    <div class="row mb-4">
       <!-- NÚMERO DO PEDIDO -->
       <div class="col-4">
@@ -32,7 +32,7 @@
 
    <hr>
 
-   <div formGroupName="endereco">
+   <div formGroupName="localEntrega">
 
       <div class="row mb-3">
          <!-- CEP -->
@@ -129,7 +129,6 @@
       </div>
 
       <div class="row mb-3">
-
          <!-- COMPLEMENTO -->
          <div class="col">
             <label for="complemento" class="form-label h6">Complemento</label>
@@ -149,7 +148,7 @@
    <div class="row mb-3">
       <!-- ADICIONAR ITENS -->
       <div class="col-5">
-         <form [formGroup]="formItens" (ngSubmit)="adicionarItem()">
+         <form [formGroup]="formItens" (ngSubmit)="salvarItem()">
             <div class="row mb-4">
                <!-- PRODUTO -->
                <div class="col">

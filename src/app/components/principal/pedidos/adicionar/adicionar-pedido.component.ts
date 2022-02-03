@@ -22,10 +22,10 @@ export class AdicionarPedidoComponent implements OnInit {
    item: Item = new Item();
    itens: Item[] = [];
    produto: Produto = new Produto();
-   produtos!: Produto[];
+   produtos: Produto[] = [];
    cliente: Cliente = new Cliente();
-   clientes!: Cliente[];
-   endereco: Endereco = new Endereco()
+   clientes: Cliente[] = [];
+   localEntrega: Endereco = new Endereco()
 
    formPedido!: FormGroup;
    formItens!: FormGroup;
@@ -41,7 +41,10 @@ export class AdicionarPedidoComponent implements OnInit {
    ngOnInit(): void {
       this.clientes = this.clienteService.getClientes();
       this.produtos = this.produtoService.getProdutos();
+      this.montarForm();
+   }
 
+   montarForm(): void {
       this.formPedido = this.fb.group({
          numPedido: [null, [Validators.required]],
          cliente: [null, [Validators.required]],
@@ -49,7 +52,7 @@ export class AdicionarPedidoComponent implements OnInit {
          dataEntrega: [null, [Validators.required]],
          total: [null],
 
-         endereco: this.fb.group({
+         localEntrega: this.fb.group({
             cep: [null],
             bairro: [null, [Validators.required]],
             logradouro: [null, [Validators.required]],
@@ -67,13 +70,20 @@ export class AdicionarPedidoComponent implements OnInit {
       });
    }
 
-   arredondarQtd(): void {
-      let produto: Produto = this.produtoService.getProdutoById(this.formItens.get('produto')?.value);
 
-      if (produto.unidadeMedida === 'Unidade') {
-         let quantidade: number = this.formItens.get('quantidade')?.value;
-         this.formItens.get('quantidade')?.setValue(Math.round(quantidade));
-         this.calcularSubtotal();
+   arredondarQtd(): void {
+      // let produto: Produto = this.produtoService.getProdutoById(this.formItens.get('produto')?.value);
+
+      for (let p of this.produtos) {
+         if (p.id == this.formItens.get('produto')?.value) {
+            let quantidade: number = this.formItens.get('quantidade')?.value;
+
+            if (p.unidadeMedida === 'Unidade') {
+               this.formItens.get('quantidade')?.setValue(Math.ceil(quantidade))
+            }
+
+            this.calcularSubtotal();
+         }
       }
    }
 
@@ -117,7 +127,7 @@ export class AdicionarPedidoComponent implements OnInit {
       this.formPedido.get('total')?.setValue(total);
    }
 
-   adicionarItem(): void {
+   salvarItem(): void {
       if (this.formItens.valid) {
          let id: number = 0;
          this.item.id = ++id;
@@ -136,7 +146,7 @@ export class AdicionarPedidoComponent implements OnInit {
       this.calcularTotal();
    }
 
-   adicionarPedido(): void {
+   salvar(): void {
       if (this.formPedido.valid) {
          this.pedido = this.formPedido.value;
          this.pedido.status = 'Em andamento';
