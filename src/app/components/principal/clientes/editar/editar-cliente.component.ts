@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { Cliente } from 'src/app/model/cliente';
-import { Endereco } from 'src/app/model/endereco';
 import { ClienteService } from 'src/app/service/cliente.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class EditarClienteComponent implements OnInit {
 
    cliente!: Cliente;
    clientes!: Cliente[];
-   endereco!: Endereco;
    modalRef?: BsModalRef;
    form!: FormGroup;
 
