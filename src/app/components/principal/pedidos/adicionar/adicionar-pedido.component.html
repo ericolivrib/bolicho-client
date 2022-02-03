@@ -1,9 +1,14 @@
 <form class="form-group" [formGroup]="formPedido" (ngSubmit)="salvar()">
    <div class="row mb-4">
-      <!-- NÚMERO DO PEDIDO -->
-      <div class="col-4">
-         <label for="numPedido" class="form-label h6">Número do pedido<span class="text-danger">*</span></label>
-         <input type="text" id="numPedido" class="form-control form-control-sm" formControlName="numPedido">
+      <!-- CLIENTE -->
+      <div class="col-6">
+         <label for="cliente" class="form-label h6">Cliente<span class="text-danger">*</span></label>
+         <select id="cliente" class="form-select form-select-sm" formControlName="cliente">
+            <option selected disabled>-- Selecione um cliente --</option>
+            <option *ngFor="let c of clientes" [value]="c.id">
+               {{ c.nome }}
+            </option>
+         </select>
       </div>
 
       <!-- DATA DO PEDIDO -->
@@ -16,17 +21,6 @@
       <div class="col-3">
          <label for="dataEntrega" class="form-label h6">Data de entrega<span class="text-danger">*</span></label>
          <input type="date" id="dataEntrega" class="form-control form-control-sm" formControlName="dataEntrega">
-      </div>
-
-      <!-- CLIENTE -->
-      <div class="col-2">
-         <label for="cliente" class="form-label h6">Cliente<span class="text-danger">*</span></label>
-         <select id="cliente" class="form-select form-select-sm" formControlName="cliente">
-            <option selected disabled>-- Selecione um cliente --</option>
-            <option *ngFor="let c of clientes" [value]="c.id">
-               {{ c.nome }}
-            </option>
-         </select>
       </div>
    </div>
 

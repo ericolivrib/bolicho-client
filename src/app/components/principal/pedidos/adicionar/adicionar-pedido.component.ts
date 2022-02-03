@@ -25,8 +25,7 @@ export class AdicionarPedidoComponent implements OnInit {
    produtos: Produto[] = [];
    cliente: Cliente = new Cliente();
    clientes: Cliente[] = [];
-   localEntrega: Endereco = new Endereco()
-
+   localEntrega: Endereco = new Endereco();
    formPedido!: FormGroup;
    formItens!: FormGroup;
 
@@ -46,7 +45,6 @@ export class AdicionarPedidoComponent implements OnInit {
 
    montarForm(): void {
       this.formPedido = this.fb.group({
-         numPedido: [null, [Validators.required]],
          cliente: [null, [Validators.required]],
          dataPedido: [null, [Validators.required]],
          dataEntrega: [null, [Validators.required]],
@@ -72,14 +70,18 @@ export class AdicionarPedidoComponent implements OnInit {
 
 
    arredondarQtd(): void {
-      // let produto: Produto = this.produtoService.getProdutoById(this.formItens.get('produto')?.value);
-
       for (let p of this.produtos) {
          if (p.id == this.formItens.get('produto')?.value) {
             let quantidade: number = this.formItens.get('quantidade')?.value;
 
             if (p.unidadeMedida === 'Unidade') {
-               this.formItens.get('quantidade')?.setValue(Math.ceil(quantidade))
+               let qtd: number = quantidade;
+
+               if (quantidade > qtd) {
+                  this.formItens.get('quantidade')?.setValue(Math.ceil(quantidade));
+               } else {
+                  this.formItens.get('quantidade')?.setValue(Math.floor(quantidade));
+               }
             }
 
             this.calcularSubtotal();
@@ -91,9 +93,14 @@ export class AdicionarPedidoComponent implements OnInit {
     * Calcula dinamicamente o subtotal do 'item' de acordo com sua quantidade
     */
    calcularSubtotal(): void {
-      let id = this.formItens.get('produto')?.value;
+      let produto!: Produto;
 
-      let produto = this.produtoService.getProdutoById(id);
+      for (let p of this.produtos) {
+         if (p.id == this.formItens.get('produto')?.value) {
+            produto = p;
+         }
+      }
+
       let preco: number = produto.precoUnitario;
       let quantidade: number = this.formItens.get('quantidade')?.value;
 
@@ -101,7 +108,8 @@ export class AdicionarPedidoComponent implements OnInit {
    }
 
    /**
-    * Impede que valores negativos ou acima da quantidade máxima de estoque de um determinado produto sejam registrados
+    * Impede que valores negativos ou acima da quantidade máxima de estoque de
+    * um determinado produto sejam registrados
     */
    limitarQuantidade(): void {
       let id = this.formItens.get('produto')?.value;
@@ -129,11 +137,13 @@ export class AdicionarPedidoComponent implements OnInit {
 
    salvarItem(): void {
       if (this.formItens.valid) {
-         let id: number = 0;
-         this.item.id = ++id;
-
          this.item = this.formItens.value;
-         this.item.produto = this.produtoService.getProdutoById(this.formItens.get('produto')?.value);
+
+         for (let p of this.produtos) {
+            if (p.id == this.formItens.get('produto')?.value) {
+               this.item.produto = p;
+            }
+         }
 
          this.itens.push(this.item);
          this.calcularTotal();
@@ -142,17 +152,24 @@ export class AdicionarPedidoComponent implements OnInit {
    }
 
    removerItem(item: Item): void {
-      this.itens.splice(this.itens.indexOf(item, 1));
+      this.itens.splice(this.itens.indexOf(item), 1);
       this.calcularTotal();
    }
 
    salvar(): void {
+      console.log(this.formPedido);
+
       if (this.formPedido.valid) {
          this.pedido = this.formPedido.value;
-         this.pedido.status = 'Em andamento';
-         this.pedido.cliente = this.clienteService.getClienteById(this.formPedido.get('cliente')?.value);
-         this.pedido.localEntrega = this.formPedido.get('endereco')?.value;
+         this.pedido.localEntrega = this.formPedido.get('localEntrega')?.value;
          this.pedido.itens = this.itens;
+         this.pedido.status = 'Em andamento'; // será removido
+
+         for (let c of this.clientes) {
+            if (c.id == this.formPedido.get('cliente')?.value) {
+               this.pedido.cliente = c;
+            }
+         }
 
          this.pedidoService.adicionar(this.pedido);
 
