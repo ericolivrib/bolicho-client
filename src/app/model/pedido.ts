@@ -5,7 +5,6 @@ import { Endereco } from "./endereco";
 export class Pedido {
 
    public id: number;
-   public numPedido: string;
    public cliente: Cliente;
    public itens: Item[];
    public localEntrega: Endereco;
@@ -17,7 +16,6 @@ export class Pedido {
 
    constructor(id?: number, numPedido?: string, cliente?: Cliente, itens?: Item[], localEntrega?: Endereco, dataPedido?: Date, dataEntrega?: Date, dataFinalizado?: Date, total?: number, status?: string) {
       this.id = <number>id;
-      this.numPedido = <string>numPedido;
       this.cliente = <Cliente>cliente;
       this.itens = <Item[]>itens;
       this.localEntrega = <Endereco>localEntrega;
