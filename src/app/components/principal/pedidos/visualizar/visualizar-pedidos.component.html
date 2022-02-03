@@ -2,7 +2,6 @@
    <thead>
       <tr class="text-center">
          <th scope="col" class="h6">#</th>
-         <th scope="col" class="h6">nº</th>
          <th scope="col" class="h6">Cliente</th>
          <th scope="col" class="h6">Itens</th>
          <th scope="col" class="h6">Data do pedido</th>
@@ -18,7 +17,6 @@
    <tbody>
       <tr class="text-center" *ngFor="let p of pedidos; let i = index">
          <th scope="row">{{ i + 1 }}</th>
-         <td>{{ p.numPedido }}</td>
          <td>{{ p.cliente.nome }}</td>
          <td>
             <button class="btn btn-sm">
@@ -149,7 +147,7 @@
 <ng-template #modalFinalizar>
    <form [formGroup]="formFinalizacao" (submit)="alterarStatus('Finalizado')">
    <div class="modal-header">
-      <h1 class="modal-title h5">Finalizar pedido n° {{ pedido.numPedido }}</h1>
+      <h1 class="modal-title h5">Finalizar pedido</h1>
    </div>
    <div class="modal-body">
       <!-- DATA DE FINALIZAÇÃO DO PEDIDO -->
@@ -170,7 +168,7 @@
 <!-- MODAL PARA CANCELAR O PEDIDO -->
 <ng-template #modalCancelar>
    <div class="modal-header">
-      <h1 class="modal-title h5">Cancelar pedido n° {{ pedido.numPedido }}</h1>
+      <h1 class="modal-title h5">Cancelar pedido</h1>
    </div>
 
    <div class="modal-body">
@@ -187,7 +185,7 @@
 <!-- MODAL PARA ARQUIVAR O PEDIDO -->
 <ng-template #modalArquivar>
    <div class="modal-header">
-      <h1 class="modal-title h5">Arquivar pedido n° {{ pedido.numPedido }}</h1>
+      <h1 class="modal-title h5">Arquivar pedido</h1>
    </div>
 
    <div class="modal-body">
