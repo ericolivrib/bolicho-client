@@ -15,22 +15,17 @@ import { PedidoService } from 'src/app/service/pedido.service';
 export class VisualizarPedidosComponent implements OnInit {
 
    pedidos!: Pedido[];
-   pedido: Pedido;
-   itens: Item[];
-   enderecoEntrega: Endereco;
-   formFinalizacao!: FormGroup;
-
+   pedido: Pedido = new Pedido();
+   itens: Item[] = [];
+   localEntrega: Endereco = new Endereco();
+   formFinalizar!: FormGroup;
    modalRef?: BsModalRef;
 
    constructor(
       private pedidoService: PedidoService,
       private modalService: BsModalService,
       private fb: FormBuilder
-   ) {
-      this.pedido = new Pedido();
-      this.itens = [];
-      this.enderecoEntrega = new Endereco();
-   }
+   ) {}
 
    ngOnInit(): void {
       this.pedidos = this.pedidoService.getPedidos();
@@ -45,7 +40,7 @@ export class VisualizarPedidosComponent implements OnInit {
    }
 
    modalEndereco(template: TemplateRef<Endereco>, id: number): void {
-      this.enderecoEntrega = this.pedidoService.getPedidoById(id).localEntrega;
+      this.localEntrega = this.pedidoService.getPedidoById(id).localEntrega;
 
       this.modalRef = this.modalService.show(template,
          Object.assign({}, { class: 'modal-lg' })
@@ -55,7 +50,7 @@ export class VisualizarPedidosComponent implements OnInit {
    modalAcoes(template: TemplateRef<Pedido>, id: number): void {
       this.pedido = this.pedidoService.getPedidoById(id);
 
-      this.formFinalizacao = this.fb.group({
+      this.formFinalizar = this.fb.group({
          dataFinalizado: [Date.parse(Date.now().toString()), [Validators.required]]
       });
 
@@ -68,8 +63,8 @@ export class VisualizarPedidosComponent implements OnInit {
       this.pedido.status = status;
 
       if (status === 'Finalizado') {
-         if (this.formFinalizacao.valid) {
-            this.pedido.dataFinalizado = this.formFinalizacao.get('dataFinalizado')?.value;
+         if (this.formFinalizar.valid) {
+            this.pedido.dataFinalizado = this.formFinalizar.get('dataFinalizado')?.value;
             this.pedidoService.alterarStatus(this.pedido);
             this.modalRef?.hide();
          }
