@@ -6,7 +6,7 @@ import { Cliente } from 'src/app/model/cliente';
 import { Item } from 'src/app/model/item';
 import { Pedido } from 'src/app/model/pedido';
 import { Produto } from 'src/app/model/produto';
-import { Endereco } from 'src/app/model/endereco';
+import { LocalEntrega } from 'src/app/model/endereco';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { PedidoService } from 'src/app/service/pedido.service';
 import { ProdutoService } from 'src/app/service/produto.service';
@@ -25,7 +25,7 @@ export class AdicionarPedidoComponent implements OnInit {
    produtos: Produto[] = [];
    cliente: Cliente = new Cliente();
    clientes: Cliente[] = [];
-   localEntrega: Endereco = new Endereco();
+   localEntrega: LocalEntrega = new LocalEntrega();
    formPedido!: FormGroup;
    formItens!: FormGroup;
 
@@ -67,7 +67,6 @@ export class AdicionarPedidoComponent implements OnInit {
          subtotal: [null]
       });
    }
-
 
    arredondarQtd(): void {
       for (let p of this.produtos) {
@@ -125,6 +124,15 @@ export class AdicionarPedidoComponent implements OnInit {
       }
    }
 
+   /**
+    * Confirma se o produto tem itens em estoque
+    * @param qtd quantidade disponível do produto
+    * @returns confirmação
+    */
+   semEstoque(qtd: number): boolean {
+      return qtd <= 0;
+   }
+
    calcularTotal(): void {
       let total: number = 0;
 
@@ -146,13 +154,17 @@ export class AdicionarPedidoComponent implements OnInit {
          }
 
          this.itens.push(this.item);
+         this.item.produto.qtdEstoque -= this.item.quantidade;
          this.calcularTotal();
          this.formItens.reset();
       }
    }
 
    removerItem(item: Item): void {
+      console.log(item);
       this.itens.splice(this.itens.indexOf(item), 1);
+      this.item = item;
+      this.item.produto.qtdEstoque += this.item.quantidade;
       this.calcularTotal();
    }
 
