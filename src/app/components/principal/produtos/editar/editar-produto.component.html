@@ -60,7 +60,7 @@
             <div class="col">
                <div class="mb-3">
                   <label for="precoUnitario" class="form-label h6">Preço unitário<span class="text-danger">*</span></label>
-                  <input type="text" id="precoUnitario" class="form-control form-control-sm" formControlName="precoUnitario">
+                  <input type="text" id="precoUnitario" class="form-control form-control-sm" formControlName="precoUnitario" currencyMask [options]="{prefix:'R$ ', thousands:'.', decimal:','}">
                </div>
             </div>
 
