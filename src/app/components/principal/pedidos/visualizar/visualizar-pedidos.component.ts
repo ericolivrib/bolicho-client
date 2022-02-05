@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 import { Pedido } from 'src/app/model/pedido';
 import { Item } from 'src/app/model/item';
-import { LocalEntrega } from 'src/app/model/endereco';
+import { LocalEntrega } from 'src/app/model/local-entrega';
 import { PedidoService } from 'src/app/service/pedido.service';
 
 @Component({

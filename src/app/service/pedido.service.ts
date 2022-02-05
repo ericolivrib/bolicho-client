@@ -4,7 +4,7 @@ import { Item } from '../model/item';
 import { Pedido } from '../model/pedido';
 import { ClienteService } from './cliente.service';
 import { ProdutoService } from './produto.service';
-import { LocalEntrega } from '../model/endereco';
+import { LocalEntrega } from '../model/local-entrega';
 
 @Injectable({
    providedIn: 'root'

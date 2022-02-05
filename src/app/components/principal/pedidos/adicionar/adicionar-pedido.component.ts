@@ -6,7 +6,7 @@ import { Cliente } from 'src/app/model/cliente';
 import { Item } from 'src/app/model/item';
 import { Pedido } from 'src/app/model/pedido';
 import { Produto } from 'src/app/model/produto';
-import { LocalEntrega } from 'src/app/model/endereco';
+import { LocalEntrega } from 'src/app/model/local-entrega';
 import { ClienteService } from 'src/app/service/cliente.service';
 import { PedidoService } from 'src/app/service/pedido.service';
 import { ProdutoService } from 'src/app/service/produto.service';

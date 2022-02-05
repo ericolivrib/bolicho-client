@@ -1,6 +1,6 @@
 import { Cliente } from "./cliente";
 import { Item } from "./item";
-import { LocalEntrega } from "./endereco";
+import { LocalEntrega } from "./local-entrega";
 
 export class Pedido {
 
