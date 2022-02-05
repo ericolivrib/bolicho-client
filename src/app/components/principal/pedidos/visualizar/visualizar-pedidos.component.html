@@ -8,7 +8,7 @@
          <th scope="col" class="h6">Prazo de entrega</th>
          <th scope="col" class="h6">Total</th>
          <th scope="col" class="h6">Status</th>
-         <th scope="col" class="h6">Endereço de entrega</th>
+         <th scope="col" class="h6">Local de entrega</th>
          <th scope="col" class="h6">
             <i class="bi bi-gear-wide-connected"></i>
          </th>
@@ -33,7 +33,7 @@
             <i *ngSwitchCase="'Em andamento'" class="bi bi-clock-fill text-primary h5"></i>
          </td>
          <td>
-            <button class="btn btn-sm" (click)="modalEndereco(modalEnderecoEntrega, p.id)">
+            <button class="btn btn-sm" (click)="modalEndereco(modalLocalEntrega, p.id)">
                <i class="bi bi-eye-fill"></i>
             </button>
          </td>
@@ -62,7 +62,7 @@
    </tbody>
 </table>
 
-<ng-template #modalEnderecoEntrega>
+<ng-template #modalLocalEntrega>
    <div class="modal-header">
       <h1 class="modal-title h5">Endereço de entrega</h1>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
@@ -73,27 +73,27 @@
          <tbody>
          <tr>
             <th scope="row" class="h6">CEP</th>
-            <td>{{ enderecoEntrega.cep }}</td>
+            <td>{{ localEntrega.cep }}</td>
          </tr>
          <tr>
             <th scope="row" class="h6">Bairro</th>
-            <td>{{ enderecoEntrega.bairro }}</td>
+            <td>{{ localEntrega.bairro }}</td>
          </tr>
          <tr>
             <th scope="row" class="h6">Rua</th>
-            <td>{{ enderecoEntrega.logradouro }}</td>
+            <td>{{ localEntrega.logradouro }}</td>
          </tr>
          <tr>
             <th scope="row" class="h6">Número</th>
-            <td>{{ enderecoEntrega.numero }}</td>
+            <td>{{ localEntrega.numero }}</td>
          </tr>
          <tr>
             <th scope="row" class="h6">Complemento</th>
-            <td>{{ enderecoEntrega.complemento }}</td>
+            <td>{{ localEntrega.complemento }}</td>
          </tr>
          <tr>
             <th scope="row" class="h6">Ponto de Referência</th>
-            <td>{{ enderecoEntrega.pontoReferencia }}</td>
+            <td>{{ localEntrega.pontoReferencia }}</td>
          </tr>
          </tbody>
       </table>
@@ -145,7 +145,7 @@
 
 <!-- MODAL PARA FINALIZAR O PEDIDO -->
 <ng-template #modalFinalizar>
-   <form [formGroup]="formFinalizacao" (submit)="alterarStatus('Finalizado')">
+   <form [formGroup]="formFinalizar" (submit)="alterarStatus('Finalizado')">
    <div class="modal-header">
       <h1 class="modal-title h5">Finalizar pedido</h1>
    </div>
