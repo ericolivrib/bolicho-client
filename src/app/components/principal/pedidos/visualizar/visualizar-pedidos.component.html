@@ -33,7 +33,7 @@
             <i *ngSwitchCase="'Em andamento'" class="bi bi-clock-fill text-primary h5"></i>
          </td>
          <td>
-            <button class="btn btn-sm" (click)="modalEndereco(modalLocalEntrega, p.id)">
+            <button class="btn btn-sm" (click)="modalLocal(modalLocalEntrega, p.id)">
                <i class="bi bi-eye-fill"></i>
             </button>
          </td>
@@ -130,9 +130,9 @@
                <td>
                   {{ item.quantidade }}
                   <span [ngSwitch]="item.produto.unidadeMedida">
-                     <span *ngSwitchCase="'Unidade'">Unidades</span>
+                     <span *ngSwitchCase="'Unidade'">Unidade(s)</span>
                      <span *ngSwitchCase="'Kg'">Kg</span>
-                     <span *ngSwitchCase="'Litro'">Litros</span>
+                     <span *ngSwitchCase="'Litro'">Litro(s)</span>
                   </span>
                </td>
                <td>{{ item.subtotal | currency:'BRL' }}</td>

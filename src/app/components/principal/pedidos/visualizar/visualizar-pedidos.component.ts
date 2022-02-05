@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 import { Pedido } from 'src/app/model/pedido';
 import { Item } from 'src/app/model/item';
-import { Endereco } from 'src/app/model/endereco';
+import { LocalEntrega } from 'src/app/model/endereco';
 import { PedidoService } from 'src/app/service/pedido.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class VisualizarPedidosComponent implements OnInit {
    pedidos!: Pedido[];
    pedido: Pedido = new Pedido();
    itens: Item[] = [];
-   localEntrega: Endereco = new Endereco();
+   localEntrega: LocalEntrega = new LocalEntrega();
    formFinalizar!: FormGroup;
    modalRef?: BsModalRef;
 
@@ -39,8 +39,12 @@ export class VisualizarPedidosComponent implements OnInit {
       );
    }
 
-   modalEndereco(template: TemplateRef<Endereco>, id: number): void {
-      this.localEntrega = this.pedidoService.getPedidoById(id).localEntrega;
+   modalLocal(template: TemplateRef<LocalEntrega>, id: number): void {
+      for (let p of this.pedidos) {
+         if (p.id == id) {
+            this.localEntrega = p.localEntrega;
+         }
+      }
 
       this.modalRef = this.modalService.show(template,
          Object.assign({}, { class: 'modal-lg' })
@@ -48,7 +52,11 @@ export class VisualizarPedidosComponent implements OnInit {
    }
 
    modalAcoes(template: TemplateRef<Pedido>, id: number): void {
-      this.pedido = this.pedidoService.getPedidoById(id);
+      for (let p of this.pedidos) {
+         if (p.id == id) {
+            this.pedido = p;
+         }
+      }
 
       this.formFinalizar = this.fb.group({
          dataFinalizado: [Date.parse(Date.now().toString()), [Validators.required]]
