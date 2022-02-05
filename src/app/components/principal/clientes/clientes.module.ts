@@ -6,6 +6,7 @@ import { ClientesComponent } from './clientes.component';
 import { ClientesRoutingModule } from './clientes-routing.module';
 import { AdicionarClienteComponent } from './adicionar/adicionar-cliente.component';
 import { EditarClienteComponent } from './editar/editar-cliente.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
    declarations: [
@@ -17,6 +18,7 @@ import { EditarClienteComponent } from './editar/editar-cliente.component';
       CommonModule,
       FormsModule,
       ReactiveFormsModule,
+      NgxMaskModule.forRoot(),
       ClientesRoutingModule
    ],
 })

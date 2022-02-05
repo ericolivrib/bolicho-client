@@ -6,6 +6,8 @@ import { ProdutosComponent } from './produtos.component';
 import { ProdutosRoutingModule } from './produtos-routing.module';
 import { AdicionarProdutoComponent } from './adicionar/adicionar-produto.component';
 import { EditarProdutoComponent } from './editar/editar-produto.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
    declarations: [
@@ -17,7 +19,9 @@ import { EditarProdutoComponent } from './editar/editar-produto.component';
       CommonModule,
       ProdutosRoutingModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      NgxMaskModule.forRoot(),
+      CurrencyMaskModule
    ],
 })
 export class ProdutosModule {}
