@@ -11,25 +11,30 @@ import { ProdutoService } from 'src/app/service/produto.service';
 })
 export class AdicionarProdutoComponent implements OnInit {
 
-   produto: Produto;
+   produto: Produto = new Produto();;
    form!: FormGroup;
 
    constructor(
       private produtoService: ProdutoService,
       private fb: FormBuilder
-   ) {
-      this.produto = new Produto();
-   }
+   ) {}
 
    ngOnInit(): void {
+      this.montarForm();
+   }
+
+   montarForm(): void {
       this.form = this.fb.group({
          descricao: [null, [Validators.required]],
          precoUnitario: [null, [Validators.required]],
-         unidadeMedida: [null, [Validators.required]]
+         unidadeMedida: [null, [Validators.required]],
+         qtdEstoque: [null]
       });
    }
 
    adicionar(): void {
+      console.log(this.form.value);
+
       if (this.form.valid) {
          this.produtoService.adicionar(this.form.value);
          this.form.reset();
