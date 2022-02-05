@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxMaskModule } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,7 +22,8 @@ import { LoginComponent } from './components/login/login.component';
       AppRoutingModule,
       FormsModule,
       ReactiveFormsModule,
-      ModalModule.forRoot()
+      ModalModule.forRoot(),
+      NgxMaskModule.forRoot()
    ],
    providers: [],
    bootstrap: [AppComponent],
