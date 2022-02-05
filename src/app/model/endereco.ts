@@ -1,4 +1,4 @@
-export class Endereco {
+export class LocalEntrega {
 
    public id: number;
    public cep: string;

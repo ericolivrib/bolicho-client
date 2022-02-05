@@ -4,17 +4,16 @@ import { Item } from '../model/item';
 import { Pedido } from '../model/pedido';
 import { ClienteService } from './cliente.service';
 import { ProdutoService } from './produto.service';
-import {Endereco} from "../model/endereco";
+import { LocalEntrega } from '../model/endereco';
 
 @Injectable({
    providedIn: 'root'
 })
 export class PedidoService {
 
-   private pedidos: Array<Pedido> = [
+   private pedidos: Pedido[] = [
       new Pedido(
          1,
-         "0001",
          this.clienteService.getClienteById(1),
          [
             new Item(
@@ -25,7 +24,7 @@ export class PedidoService {
                new Date(2022, 2, 23),
             )
          ],
-         new Endereco(
+         new LocalEntrega(
             1,
             '97105-900',
             'Camobi',
@@ -56,7 +55,7 @@ export class PedidoService {
       }
    }
 
-   getPedidos(): Array<Pedido> {
+   getPedidos(): Pedido[] {
       return this.pedidos;
    }
 
@@ -64,7 +63,7 @@ export class PedidoService {
       let pedido!: Pedido;
 
       for (pedido of this.pedidos) {
-         if (pedido.id === id) {
+         if (pedido.id == id) {
             return pedido;
          }
       }
