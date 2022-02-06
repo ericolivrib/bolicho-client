@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Cliente } from 'src/app/model/cliente';
-import { Item } from 'src/app/model/item';
-import { Pedido } from 'src/app/model/pedido';
-import { Produto } from 'src/app/model/produto';
-import { LocalEntrega } from 'src/app/model/local-entrega';
-import { ClienteService } from 'src/app/service/cliente.service';
-import { PedidoService } from 'src/app/service/pedido.service';
-import { ProdutoService } from 'src/app/service/produto.service';
+import { Cliente } from 'src/app/core/model/cliente';
+import { Item } from 'src/app/core/model/item';
+import { Pedido } from 'src/app/core/model/pedido';
+import { Produto } from 'src/app/core/model/produto';
+import { LocalEntrega } from 'src/app/core/model/local-entrega';
+import { ClienteService } from 'src/app/core/service/cliente.service';
+import { PedidoService } from 'src/app/core/service/pedido.service';
+import { ProdutoService } from 'src/app/core/service/produto.service';
 
 @Component({
    selector: 'app-adicionar-pedido',

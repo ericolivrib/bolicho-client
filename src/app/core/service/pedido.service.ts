@@ -30,7 +30,7 @@ export class PedidoService {
             'Camobi',
             'Avenida Roraima',
             1405,
-            'CEU II - Bloco',
+            'CEU II - Bloco 14',
             'Ao lado da União Universitária'
          ),
          new Date("2022/01/07"),

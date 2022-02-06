@@ -8,17 +8,8 @@ import { Cliente } from '../model/cliente';
 export class ClienteService {
 
    private clientes: Cliente[] = [
-      new Cliente(
-         1,
-         'Fulano',
-         'fulano@email.com',
-         '(55) 99999-9999',
-         '000.000.000-00',
-         true
-      )
+      new Cliente(1, 'Fulano', 'fulano@email.com', '(55) 99999-9999', '000.000.000-00', true)
    ];
-
-   constructor() {}
 
    adicionar(cliente: Cliente): void {
       cliente.id = this.clientes.length + 1;

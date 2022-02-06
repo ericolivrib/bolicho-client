@@ -2,8 +2,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
-import { Cliente } from 'src/app/model/cliente';
-import { ClienteService } from 'src/app/service/cliente.service';
+import { Cliente } from 'src/app/core/model/cliente';
+import { ClienteService } from 'src/app/core/service/cliente.service';
 
 @Component({
    selector: 'app-visualizar-clientes',

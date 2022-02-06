@@ -7,9 +7,9 @@ import { Produto } from '../model/produto';
 export class ProdutoService {
 
    private produtos: Produto[] = [
-      new Produto(1, 'Queijo Colonial', 27.00, 'Kg', 5),
-      new Produto(2, 'Licor', 6.00, 'Unidade', 10),
-      new Produto(3, 'Chimia', 3.50, 'Unidade', 7)
+      new Produto(1, 'Queijo Colonial', 27.00, 'Kg', 5, false),
+      new Produto(2, 'Licor', 6.00, 'Unidade', 10, false),
+      new Produto(3, 'Chimia', 3.50, 'Unidade', 7, false)
    ]
 
    constructor() {}

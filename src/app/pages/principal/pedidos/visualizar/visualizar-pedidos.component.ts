@@ -2,10 +2,11 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
-import { Pedido } from 'src/app/model/pedido';
-import { Item } from 'src/app/model/item';
-import { LocalEntrega } from 'src/app/model/local-entrega';
-import { PedidoService } from 'src/app/service/pedido.service';
+import { Pedido } from 'src/app/core/model/pedido';
+import { Item } from 'src/app/core/model/item';
+import { LocalEntrega } from 'src/app/core/model/local-entrega';
+import { PedidoService } from 'src/app/core/service/pedido.service';
+import { Status } from 'src/app/core/model/status';
 
 @Component({
    selector: 'app-visualizar-pedidos',
@@ -18,6 +19,7 @@ export class VisualizarPedidosComponent implements OnInit {
    pedido: Pedido = new Pedido();
    itens: Item[] = [];
    localEntrega: LocalEntrega = new LocalEntrega();
+   status!: Status;
    formFinalizar!: FormGroup;
    modalRef?: BsModalRef;
 
