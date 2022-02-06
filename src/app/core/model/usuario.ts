@@ -1,12 +1,12 @@
 export class Usuario {
 
-   public id: number;
    public email: string;
    public senha: string;
+   public token: string;
 
-   constructor(id?: number, email?: string, senha?: string) {
-      this.id = <number>id;
+   constructor(email?: string, senha?: string, token?: string) {
       this.email = <string>email;
       this.senha = <string>senha;
+      this.token = <string>token;
    }
 }
