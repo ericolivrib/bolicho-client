@@ -3,8 +3,7 @@
       <tr class="text-center">
          <th scope="col" class="h6">#</th>
          <th scope="col" class="h6">Descrição</th>
-         <th scope="col" class="h6">Preço unitário</th>
-         <th scope="col" class="h6">Unidade de medida</th>
+         <th scope="col" class="h6">Preço</th>
          <th scope="col" class="h6">Qtd. estoque</th>
          <th>
             <i class="bi bi-gear-wide-connected"></i>
@@ -12,22 +11,35 @@
       </tr>
    </thead>
    <tbody>
-      <tr class="text-center" *ngFor="let p of produtos; let i = index">
+      <tr class="text-center" *ngFor="let p of produtos; index as i">
          <th scope="row">{{ i + 1 }}</th>
          <td>{{ p.descricao }}</td>
-         <td>{{ p.precoUnitario | currency:'BRL' }}</td>
-         <td>{{ p.unidadeMedida }}</td>
-         <td>{{ p.qtdEstoque }}</td>
          <td>
-            <button class="btn btn-primary btn-sm" (click)="modalAtualizarEstoque(atualizarQtd, p.id)">
+            {{ p.precoUnitario | currency:'BRL' }}
+            <span [ngSwitch]="p.unidadeMedida">
+               <span *ngSwitchCase="'Unidade'">/ unidade</span>
+               <span *ngSwitchCase="'Kg'">/ Kg</span>
+               <span *ngSwitchCase="'Litro'">/ litro</span>
+            </span>
+         </td>
+         <td>
+            {{ p.qtdEstoque }}
+            <span [ngSwitch]="p.unidadeMedida">
+               <span *ngSwitchCase="'Unidade'">Unidade(s)</span>
+               <span *ngSwitchCase="'Kg'">Kg</span>
+               <span *ngSwitchCase="'Litro'">Litro(s)</span>
+            </span>
+         </td>
+         <td>
+            <button class="btn btn-primary btn-sm" title="Atualizar estoque" (click)="modalAcoes(atualizarQtd, p)">
                <i class="bi bi-plus-circle"></i>
             </button>
             &nbsp;
-            <button class="btn btn-warning btn-sm" (click)="modalEditar(editar, p.id)">
+            <button class="btn btn-warning btn-sm" title="Editar produto" (click)="modalAcoes(editar, p)">
                <i class="bi bi-pencil-fill"></i>
             </button>
             &nbsp;
-            <button class="btn btn-danger btn-sm" (click)="modalRemover(remover, p.id)">
+            <button class="btn btn-danger btn-sm" title="Deletar produto" (click)="modalAcoes(remover, p)">
                <i class="bi bi-trash"></i>
             </button>
          </td>
@@ -44,6 +56,9 @@
 
       <div class="modal-body">
          <div class="row g-2">
+
+            <!-- ID -->
+            <input type="hidden" formControlName="id">
 
             <!-- DESCRIÇÃO -->
             <div class="col">
@@ -82,7 +97,7 @@
       <div class="modal-footer">
          <button type="submit" class="btn btn-warning">Editar</button>
          &nbsp;
-         <button type="submit" class="btn btn-secondary" (click)="this.modalRef?.hide()">Cancelar</button>
+         <button class="btn btn-secondary" (click)="this.modalRef?.hide()">Cancelar</button>
       </div>
    </form>
 </ng-template>
@@ -116,12 +131,8 @@
       </div>
 
       <div class="modal-body">
-         <div class="row">
-            <label for="quantidade" class="col-8 col-form-label h6">Quantidade a ser adicionada ao estoque:</label>
-            <div class="col-4">
-               <input type="number" id="quantidade" class="form-control form-control-sm" formControlName="quantidade">
-            </div>
-         </div>
+         <label for="quantidade" class="form-label h6">Nova quantidade:</label>
+         <input type="number" id="quantidade" class="form-control form-control-sm" formControlName="quantidade">
       </div>
 
       <div class="modal-footer">

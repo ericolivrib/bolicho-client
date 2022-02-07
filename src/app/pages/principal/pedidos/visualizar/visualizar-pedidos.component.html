@@ -15,12 +15,12 @@
       </tr>
    </thead>
    <tbody>
-      <tr class="text-center" *ngFor="let p of pedidos; let i = index">
+      <tr class="text-center" *ngFor="let p of pedidos; index as i">
          <th scope="row">{{ i + 1 }}</th>
          <td>{{ p.cliente.nome }}</td>
          <td>
             <button class="btn btn-sm">
-               <i class="bi bi-eye-fill" (click)="modalItens(modalItensPedido, p.id)"></i>
+               <i class="bi bi-eye-fill" (click)="modalItens(modalItensPedido, p.itens)"></i>
             </button>
          </td>
          <td>{{ p.dataPedido | date:'dd/MM/yyyy' }}</td>
@@ -33,28 +33,23 @@
             <i *ngSwitchCase="'Em andamento'" class="bi bi-clock-fill text-primary h5"></i>
          </td>
          <td>
-            <button class="btn btn-sm" (click)="modalLocal(modalLocalEntrega, p.id)">
+            <button class="btn btn-sm" (click)="modalLocal(modalLocalEntrega, p.localEntrega)">
                <i class="bi bi-eye-fill"></i>
             </button>
          </td>
          <td>
             <!-- FINALIZAR PEDIDO -->
-            <button *ngIf="p.status !== 'Finalizado' && p.status !== 'Cancelado'" class="btn btn-success btn-sm" title="Finalizar pedido" style="margin-right: 5%;" (click)="modalAcoes(modalFinalizar, p.id)">
+            <button *ngIf="p.status == 'Em andamento' || p.status == 'Atrasado'" class="btn btn-success btn-sm" title="Finalizar pedido" style="margin-right: 5%;" (click)="modalAcoes(modalFinalizar, p)">
                <i class="bi bi-patch-check h6"></i>
             </button>
 
-            <!-- DATA DE FINALIZAÇÃO -->
-            <button *ngIf="p.status == 'Finalizado'" class="btn btn-outline-dark btn-sm" title="Data de finalização" style="margin-right: 5%;" popover="{{ p.dataFinalizado | date: 'dd/MM/yyy' }}" popoverTitle="Data de finalização" triggers="mouseenter:mouseleave">
-               <i class="bi bi-calendar-week-fill h6"></i>
-            </button>
-
             <!-- CANCELAR PEDIDO -->
-            <button *ngIf="p.status !== 'Finalizado' && p.status !== 'Cancelado'" class="btn btn-danger btn-sm" title="Cancelar pedido" style="margin-right: 5%;" (click)="modalAcoes(modalCancelar, p.id)">
+            <button *ngIf="p.status == 'Em andamento' || p.status == 'Atrasado'" class="btn btn-danger btn-sm" title="Cancelar pedido" (click)="modalAcoes(modalCancelar, p)">
                <i class="bi bi-x-octagon h6"></i>
             </button>
 
             <!-- ARQUIVAR PEDIDO -->
-            <button class="btn btn-dark btn-sm" title="Arquivar pedido" (click)="modalAcoes(modalArquivar, p.id)">
+            <button *ngIf="p.status == 'Finalizado' || p.status == 'Cancelado'" class="btn btn-dark btn-sm" title="Arquivar pedido" (click)="modalAcoes(modalArquivar, p)">
                <i class="bi bi-archive h6"></i>
             </button>
          </td>
@@ -124,7 +119,7 @@
             </tr>
          </thead>
          <tbody>
-            <tr *ngFor="let item of itens; let i = index">
+            <tr *ngFor="let item of itens; index as i">
                <th scope="row">{{ i + 1 }}</th>
                <td>{{ item.produto.descricao }}</td>
                <td>
@@ -145,24 +140,20 @@
 
 <!-- MODAL PARA FINALIZAR O PEDIDO -->
 <ng-template #modalFinalizar>
-   <form [formGroup]="formFinalizar" (submit)="alterarStatus('Finalizado')">
    <div class="modal-header">
       <h1 class="modal-title h5">Finalizar pedido</h1>
+<!--      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"-->
+<!--              (click)="modalRef?.hide()"></button>-->
    </div>
    <div class="modal-body">
-      <!-- DATA DE FINALIZAÇÃO DO PEDIDO -->
-         <div class="row">
-            <label for="dataFinalizado" class="col-4 col-form-label h6">Data de entrega</label>
-            <div class="col-8">
-               <input type="date" id="dataFinalizado" class="form-control" formControlName="dataFinalizado">
-            </div>
-         </div>
-      </div>
-      <div class="modal-footer">
-         <button class="btn btn-success mr-3">Finalizar</button>
-         <button class="btn btn-secondary" (click)="modalRef?.hide()">Cancelar</button>
-      </div>
-   </form>
+      Deseja <span class="text-success fw-bold">finalizar</span> o pedido?
+   </div>
+
+   <div class="modal-footer">
+      <button class="btn btn-success" (click)="alterarStatus('Finalizado')">Sim</button>
+      &nbsp;
+      <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
+   </div>
 </ng-template>
 
 <!-- MODAL PARA CANCELAR O PEDIDO -->
@@ -197,7 +188,7 @@
    </div>
 
    <div class="modal-footer">
-      <button class="btn btn-dark" (click)="arquivarPedido()">Sim</button>
+      <button class="btn btn-dark" (click)="deletarPedido()">Sim</button>
       &nbsp;
       <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
    </div>

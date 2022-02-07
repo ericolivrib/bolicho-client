@@ -10,7 +10,7 @@
       </tr>
    </thead>
    <tbody>
-      <tr class="text-center" *ngFor="let c of clientes; let i = index">
+      <tr class="text-center" *ngFor="let c of clientes; index as i">
          <th scope="row">{{ i + 1 }}</th>
          <td>{{ c.nome }}</td>
          <td>{{ c.email }}</td>
@@ -30,7 +30,7 @@
 </table>
 
 <ng-template #editar>
-   <form [formGroup]="form" (ngSubmit)="editarCliente()">
+   <form [formGroup]="form" (ngSubmit)="atualizar()">
       <div class="modal-header">
          <h1 class="modal-title h5">Editar informações de {{ cliente.nome }}</h1>
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
@@ -39,6 +39,8 @@
 
       <div class="modal-body">
          <div class="row g-2">
+            <!-- ID -->
+            <input type="hidden" formControlName="id">
 
             <!-- NOME -->
             <div class="col-12">
@@ -87,6 +89,9 @@
          </div>
       </div>
    </form>
+
+<!--   <app-editar-cliente></app-editar-cliente>-->
+
 </ng-template>
 
 <ng-template #remover>
@@ -101,7 +106,7 @@
    </div>
 
    <div class="modal-footer">
-      <button class="btn btn-danger" (click)="removerCliente()">Sim</button>
+      <button class="btn btn-danger" (click)="deletar()">Sim</button>
       &nbsp;
       <button class="btn btn-secondary" (click)="modalRef?.hide()">Não</button>
    </div>

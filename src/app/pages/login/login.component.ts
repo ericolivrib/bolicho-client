@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Usuario } from 'src/app/core/model/usuario';
-import { AuthService } from 'src/app/core/service/auth.service';
+import { LoginService } from 'src/app/core/service/login.service';
 
 @Component({
    selector: 'app-login',
@@ -12,33 +11,31 @@ import { AuthService } from 'src/app/core/service/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-   public usuario!: Usuario;
-   public formulario!: FormGroup;
+   public form!: FormGroup;
 
    constructor(
-      private authService: AuthService,
+      private loginService: LoginService,
       private formBuilder: FormBuilder,
-      private router: Router,
+      private router: Router
    ) {}
 
    ngOnInit(): void {
-      this.formulario = this.formBuilder.group({
+      this.montarForm();
+   }
+
+   montarForm(): void {
+      this.form = this.formBuilder.group({
          email: [null, [Validators.required, Validators.email]],
          senha: [null, [Validators.required]]
       });
    }
 
    entrar(): void {
-      if (this.formulario.valid) {
-         new Usuario(
-            1,
-            this.formulario.get('email')?.value,
-            this.formulario.get('senha')?.value
-         );
-
-         if (this.authService.autenticar(this.usuario)) {
-            this.router.navigate(['principal']);
-         }
+      if (this.form.valid) {
+         this.loginService.login(this.form.value).subscribe(usuario => {
+            this.loginService.iniciarSessao(usuario);
+            this.router.navigate(['/principal']);
+         });
       }
    }
 }

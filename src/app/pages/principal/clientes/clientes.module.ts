@@ -5,14 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientesComponent } from './clientes.component';
 import { ClientesRoutingModule } from './clientes-routing.module';
 import { AdicionarClienteComponent } from './adicionar/adicionar-cliente.component';
-import { EditarClienteComponent } from './editar/editar-cliente.component';
+import { VisualizarClientesComponent } from './visualizar/visualizar-clientes.component';
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
    declarations: [
       ClientesComponent,
       AdicionarClienteComponent,
-      EditarClienteComponent
+      VisualizarClientesComponent
    ],
    imports: [
       CommonModule,

@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 import { Produto } from '../model/produto';
 
 @Injectable({
@@ -6,51 +9,27 @@ import { Produto } from '../model/produto';
 })
 export class ProdutoService {
 
-   private produtos: Produto[] = [
-      new Produto(1, 'Queijo Colonial', 27.00, 'Kg', 5, false),
-      new Produto(2, 'Licor', 6.00, 'Unidade', 10, false),
-      new Produto(3, 'Chimia', 3.50, 'Unidade', 7, false)
-   ]
+   private readonly url = 'http://localhost:8080/produtos/';
 
-   constructor() {}
+   constructor(private http: HttpClient) {}
 
-   getProdutos(): Produto[] {
-      return this.produtos;
+   public buscar(): Observable<Produto[]> {
+      return this.http.get<Produto[]>(this.url);
    }
 
-   getProdutoById(id: number): Produto {
-      let produto!: Produto;
-
-      for (produto of this.produtos) {
-         if (produto.id == id) {
-            return produto;
-         }
-      }
-
-      return produto;
+   public incluir(produto: Produto): Observable<Produto> {
+      return this.http.post<Produto>(this.url + 'cadastrar', produto);
    }
 
-   adicionar(produto: Produto): void {
-      produto.id = this.produtos.length + 1;
-      produto.qtdEstoque = 0;
-      this.produtos.push(produto);
+   public atualizar(produto: Produto): Observable<Produto> {
+      return this.http.put<Produto>(this.url + 'atualizar', produto);
    }
 
-   atualizar(produto: Produto): void {
-      this.produtos[this.produtos.indexOf(produto)] = produto;
+   public atualizarEstoque(id: number, qtdEstoque: number): Observable<Produto> {
+      return this.http.put<Produto>(this.url + `atualizar-estoque/${id}`, {qtdEstoque});
    }
 
-   atualizarQtdEstoque(produto: Produto, quantidade: number): void {
-      let p: Produto = this.produtos[this.produtos.indexOf(produto)];
-
-      p.qtdEstoque += quantidade;
-
-      if (p.qtdEstoque < 0) {
-         p.qtdEstoque = 0;
-      }
-   }
-
-   remover(produto: Produto): void {
-      this.produtos.splice(this.produtos.indexOf(produto), 1);
+   public arquivar(id: number): Observable<any> {
+      return this.http.delete(this.url + `desativar/${id}`);
    }
 }

@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProdutosComponent } from './produtos.component';
 import { ProdutosRoutingModule } from './produtos-routing.module';
 import { AdicionarProdutoComponent } from './adicionar/adicionar-produto.component';
-import { EditarProdutoComponent } from './editar/editar-produto.component';
+import { VisualizarProdutosComponent } from './visualizar/visualizar-produtos.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
@@ -13,7 +13,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
    declarations: [
       ProdutosComponent,
       AdicionarProdutoComponent,
-      EditarProdutoComponent
+      VisualizarProdutosComponent
    ],
    imports: [
       CommonModule,

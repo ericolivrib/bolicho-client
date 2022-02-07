@@ -15,11 +15,11 @@ import { Status } from 'src/app/core/model/status';
 })
 export class VisualizarPedidosComponent implements OnInit {
 
-   pedidos!: Pedido[];
+   pedidos: Pedido[] = [];
    pedido: Pedido = new Pedido();
    itens: Item[] = [];
    localEntrega: LocalEntrega = new LocalEntrega();
-   status!: Status;
+   dataAtual: Date = new Date();
    formFinalizar!: FormGroup;
    modalRef?: BsModalRef;
 
@@ -30,64 +30,68 @@ export class VisualizarPedidosComponent implements OnInit {
    ) {}
 
    ngOnInit(): void {
-      this.pedidos = this.pedidoService.getPedidos();
+      this.buscarPedidos();
    }
 
-   modalItens(template: TemplateRef<Item[]>, id: number): void {
-      this.itens = this.pedidoService.getPedidoById(id).itens;
-
-      this.modalRef = this.modalService.show(template,
-         Object.assign({}, { class: 'modal-lg' })
-      );
-   }
-
-   modalLocal(template: TemplateRef<LocalEntrega>, id: number): void {
-      for (let p of this.pedidos) {
-         if (p.id == id) {
-            this.localEntrega = p.localEntrega;
-         }
-      }
-
-      this.modalRef = this.modalService.show(template,
-         Object.assign({}, { class: 'modal-lg' })
-      );
-   }
-
-   modalAcoes(template: TemplateRef<Pedido>, id: number): void {
-      for (let p of this.pedidos) {
-         if (p.id == id) {
-            this.pedido = p;
-         }
-      }
-
-      this.formFinalizar = this.fb.group({
-         dataFinalizado: [Date.parse(Date.now().toString()), [Validators.required]]
+   buscarPedidos(): void {
+      this.pedidoService.buscar().subscribe(retorno => {
+         this.pedidos = retorno;
+         this.verificarAtraso();
       });
+   }
+
+   verificarAtraso(): void {
+      for (let p of this.pedidos) {
+         if (this.dataAtual.getDate > p.dataEntrega.getDate) {
+            this.pedido = p;
+            this.alterarStatus('Atrasado');
+         }
+      }
+   }
+
+   modalItens(template: TemplateRef<Item[]>, itens: Item[]): void {
+      this.itens = itens;
 
       this.modalRef = this.modalService.show(template,
-         Object.assign({}, { class: 'modal-md' })
+         Object.assign({}, { class: 'modal-lg' })
+      );
+   }
+
+   modalLocal(template: TemplateRef<LocalEntrega>, localEntrega: LocalEntrega): void {
+      this.localEntrega = localEntrega;
+
+      this.modalRef = this.modalService.show(template,
+         Object.assign({}, { class: 'modal-lg' })
+      );
+   }
+
+   modalAcoes(template: TemplateRef<Pedido>, pedido: Pedido): void {
+      this.pedido = pedido;
+
+      this.modalRef = this.modalService.show(template,
+         Object.assign({}, {class: 'modal-md'})
       );
    }
 
    alterarStatus(status: string): void {
       this.pedido.status = status;
 
-      if (status === 'Finalizado') {
-         if (this.formFinalizar.valid) {
-            this.pedido.dataFinalizado = this.formFinalizar.get('dataFinalizado')?.value;
-            this.pedidoService.alterarStatus(this.pedido);
-            this.modalRef?.hide();
-         }
-      } else {
-         this.pedidoService.alterarStatus(this.pedido);
-         this.modalRef?.hide();
-      }
+      console.log(status);
+
+      this.pedidoService.atualizarStatus(this.pedido.id, status)
+         .subscribe(retorno => {
+            alert('Status do pedido alterado para ' + retorno.status);
+         });
+      this.modalRef?.hide();
 
       console.log(this.pedido);
    }
 
-   arquivarPedido(): void {
-      this.pedidoService.arquivar(this.pedido);
+   deletarPedido(): void {
+      this.pedidoService.deletar(this.pedido.id).subscribe(retorno => {
+         console.log('Pedido deletado');
+         this.buscarPedidos();
+      });
       this.modalRef?.hide();
    }
 

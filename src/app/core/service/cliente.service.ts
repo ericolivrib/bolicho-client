@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { Cliente } from '../model/cliente';
 
@@ -7,36 +9,27 @@ import { Cliente } from '../model/cliente';
 })
 export class ClienteService {
 
-   private clientes: Cliente[] = [
-      new Cliente(1, 'Fulano', 'fulano@email.com', '(55) 99999-9999', '000.000.000-00', true)
-   ];
+   private readonly URL = 'http://localhost:8080/clientes/';
 
-   adicionar(cliente: Cliente): void {
-      cliente.id = this.clientes.length + 1;
-      this.clientes.push(cliente);
+   constructor(private http: HttpClient) {}
+
+   public buscarClientes(): Observable<Cliente[]> {
+      return this.http.get<Cliente[]>(this.URL);
    }
 
-   getClientes(): Cliente[] {
-      return this.clientes;
+   public buscarCliente(id: number): Observable<Cliente> {
+      return this.http.get<Cliente>(this.URL + `${id}`);
    }
 
-   remover(cliente: Cliente): void {
-      this.clientes.splice(this.clientes.indexOf(cliente), 1);
+   public incluir(cliente: Cliente): Observable<Cliente> {
+      return this.http.post<Cliente>(this.URL + 'cadastrar', cliente);
    }
 
-   atualizar(cliente: Cliente): void {
-      this.clientes[this.clientes.indexOf(cliente)] = cliente;
+   public atualizar(cliente: Cliente): Observable<Cliente> {
+      return this.http.put<Cliente>(this.URL + 'atualizar', cliente);
    }
 
-   getClienteById(id: number): Cliente {
-      let cliente!: Cliente;
-
-      for (cliente of this.clientes) {
-         if (cliente.id === id) {
-            return cliente;
-         }
-      }
-
-      return cliente;
+   public desativar(id: number): Observable<any> {
+      return this.http.delete(this.URL + `desativar/${id}`);
    }
 }

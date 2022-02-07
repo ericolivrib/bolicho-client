@@ -38,9 +38,21 @@ export class AdicionarPedidoComponent implements OnInit {
    ) {}
 
    ngOnInit(): void {
-      this.clientes = this.clienteService.getClientes();
-      this.produtos = this.produtoService.getProdutos();
+      this.buscarClientes();
+      this.buscarProdutos();
       this.montarForm();
+   }
+
+   buscarClientes(): void {
+      this.clienteService.buscarClientes().subscribe(retorno => {
+         this.clientes = retorno;
+      });
+   }
+
+   buscarProdutos(): void {
+      this.produtoService.buscar().subscribe(retorno => {
+         this.produtos = retorno;
+      });
    }
 
    montarForm(): void {
@@ -111,15 +123,21 @@ export class AdicionarPedidoComponent implements OnInit {
     * um determinado produto sejam registrados
     */
    limitarQuantidade(): void {
-      let id = this.formItens.get('produto')?.value;
-      let produto = this.produtoService.getProdutoById(id);
-      let quantidade: number = this.formItens.get('quantidade')?.value;
+      let id: number = this.formItens.value.produto;
+
+      for (let p of this.produtos) {
+         if (p.id == id) {
+            this.produto = p;
+         }
+      }
+
+      let quantidade: number = this.formItens.value.quantidade;
 
       if (quantidade < 0) {
          this.formItens.get('quantidade')?.setValue(0);
          this.calcularSubtotal();
-      } else if (quantidade > produto.qtdEstoque && id != null) {
-         this.formItens.get('quantidade')?.setValue(produto.qtdEstoque);
+      } else if (quantidade > this.produto.qtdEstoque && id != null) {
+         this.formItens.get('quantidade')?.setValue(this.produto.qtdEstoque);
          this.calcularSubtotal();
       }
    }
@@ -148,7 +166,7 @@ export class AdicionarPedidoComponent implements OnInit {
          this.item = this.formItens.value;
 
          for (let p of this.produtos) {
-            if (p.id == this.formItens.get('produto')?.value) {
+            if (p.id == this.formItens.value.produto) {
                this.item.produto = p;
             }
          }
@@ -169,26 +187,25 @@ export class AdicionarPedidoComponent implements OnInit {
    }
 
    salvar(): void {
-      console.log(this.formPedido);
-
-      if (this.formPedido.valid) {
+      if (this.formPedido.valid && this.itens.length > 0) {
          this.pedido = this.formPedido.value;
-         this.pedido.localEntrega = this.formPedido.get('localEntrega')?.value;
+         this.pedido.localEntrega = this.formPedido.value.localEntrega;
          this.pedido.itens = this.itens;
-         this.pedido.status = 'Em andamento'; // será removido
 
          for (let c of this.clientes) {
-            if (c.id == this.formPedido.get('cliente')?.value) {
+            if (c.id == this.formPedido.value.cliente) {
                this.pedido.cliente = c;
             }
          }
 
-         this.pedidoService.adicionar(this.pedido);
-
-         console.log(this.pedido);
+         this.pedidoService.incluir(this.pedido).subscribe(retorno => {
+            alert('Pedido adicionado!');
+            console.log(retorno);
+         });
 
          this.formPedido.reset();
-         this.router.navigate(['principal', 'pedidos', 'visualizar']);
+         this.formItens.reset();
+         this.itens.splice(0, this.itens.length);
       }
    }
 }

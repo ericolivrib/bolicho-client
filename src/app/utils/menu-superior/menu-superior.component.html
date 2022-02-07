@@ -6,20 +6,20 @@
          <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="float-center">
-         <div class="collapse navbar-collapse " id="navbarNav">
-            <ul class="navbar-nav">
-               <li routerLink="clientes" class="nav-item" style="cursor: pointer;">
-                  <a routerLinkActive="active" class="nav-link">Clientes</a>
-               </li>
-               <li routerLink="produtos" class="nav-item" style="cursor: pointer;">
-                  <a routerLinkActive="active" class="nav-link">Produtos</a>
-               </li>
-               <li routerLink="pedidos" class="nav-item" style="cursor: pointer;">
-                  <a routerLinkActive="active" class="nav-link">Pedidos</a>
-               </li>
-            </ul>
-         </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav">
+            <li routerLink="clientes" class="nav-item" style="cursor: pointer;">
+               <a routerLinkActive="active" class="nav-link">Clientes</a>
+            </li>
+            <li routerLink="produtos" class="nav-item" style="cursor: pointer;">
+               <a routerLinkActive="active" class="nav-link">Produtos</a>
+            </li>
+            <li routerLink="pedidos" class="nav-item" style="cursor: pointer;">
+               <a routerLinkActive="active" class="nav-link">Pedidos</a>
+            </li>
+         </ul>
       </div>
+
+      <a class="text-decoration-none fw-bold link-light fs-5" (click)="logout()" style="cursor: pointer">Sair</a>
    </div>
 </nav>

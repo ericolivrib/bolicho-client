@@ -11,7 +11,7 @@ import { ProdutoService } from 'src/app/core/service/produto.service';
 })
 export class AdicionarProdutoComponent implements OnInit {
 
-   produto: Produto = new Produto();;
+   produto: Produto = new Produto();
    form!: FormGroup;
 
    constructor(
@@ -36,7 +36,9 @@ export class AdicionarProdutoComponent implements OnInit {
       console.log(this.form.value);
 
       if (this.form.valid) {
-         this.produtoService.adicionar(this.form.value);
+         this.produtoService.incluir(this.form.value).subscribe(retorno => {
+            alert(retorno.descricao + ' adicionado aos produtos!');
+         });
          this.form.reset();
       }
    }

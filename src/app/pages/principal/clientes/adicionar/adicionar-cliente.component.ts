@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ClienteService } from 'src/app/service/cliente.service';
+import { ClienteService } from 'src/app/core/service/cliente.service';
 
 @Component({
    selector: 'app-adicionar-cliente',
@@ -18,9 +18,13 @@ export class AdicionarClienteComponent implements OnInit {
    ) {}
 
    ngOnInit(): void {
+      this.montarForm();
+   }
+
+   montarForm(): void {
       this.form = this.formBuilder.group({
          nome: [null, [Validators.required]],
-         email: [null, [Validators.required, Validators.email]],
+         email: [null, [Validators.email]],
          telefone: [null, [Validators.required]],
          cpf: [null]
       });
@@ -30,7 +34,9 @@ export class AdicionarClienteComponent implements OnInit {
       console.log(this.form.value);
 
       if (this.form.valid) {
-         this.clientesService.adicionar(this.form.value);
+         this.clientesService.incluir(this.form.value).subscribe(retorno => {
+            alert(retorno.nome + ' adicionado à lista de clientes');
+         });
          this.form.reset();
       }
    }
